@@ -36,6 +36,14 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Claude Code per-user state
+.claude/settings.local.json
+.claude/plugins.lock.json
+.claude/scheduled_tasks.lock
+
+# Ticket runtime state
+.ai/tickets/.ntc-heartbeat
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

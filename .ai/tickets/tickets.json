@@ -1,0 +1,24 @@
+{
+  "project": "STW",
+  "counter": 3,
+  "rootFolder": ".ai",
+  "datasource": {
+    "type": "local",
+    "path": "tickets.md"
+  },
+  "vault": {
+    "path": "C:/dev/vaults/ai",
+    "enabled": true
+  },
+  "roles": {
+    "pm": "user",
+    "woz": "developer",
+    "turing": "tester"
+  },
+  "defaults": {
+    "autoCommit": false,
+    "autoPush": false,
+    "archive": "N",
+    "autoCreate": null
+  }
+}
