@@ -1,0 +1,20 @@
+{
+  "name": "stxv",
+  "displayName": "Studytrax Website",
+  "type": "nextjs-vercel",
+  "githubRepo": "sciencetrax/studytrax-www",
+  "servers": {
+    "stxv-staging": {
+      "host": "vercel",
+      "appDir": ".",
+      "healthUrl": "https://studytrax-www-staging.vercel.app",
+      "requiresConfirmation": false
+    },
+    "stxv-prod": {
+      "host": "vercel",
+      "appDir": ".",
+      "healthUrl": "https://studytrax-www.vercel.app",
+      "requiresConfirmation": true
+    }
+  }
+}

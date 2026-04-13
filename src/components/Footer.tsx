@@ -1,4 +1,8 @@
 import Link from "next/link";
+import packageJson from "../../package.json";
+
+const APP_VERSION = packageJson.version;
+const BUILD_ID = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "dev";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -79,7 +83,7 @@ export default function Footer() {
           className="mt-8 pt-6 border-t text-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
           style={{ borderColor: "var(--color-border)", color: "var(--color-muted)" }}
         >
-          <p>&copy; {year} Studytrax. All rights reserved.</p>
+          <p>&copy; {year} Studytrax. All rights reserved. <span style={{ opacity: 0.5 }}>v{APP_VERSION}+{BUILD_ID}</span></p>
           <p>Powering clinical research for over two decades.</p>
         </div>
       </div>
