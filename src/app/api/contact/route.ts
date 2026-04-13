@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
+import nodemailer from "nodemailer";
+import dns from "dns/promises";
 
-const AWS_REGION = process.env.AWS_SES_REGION ?? "us-east-2";
-const AWS_ACCESS_KEY = process.env.STX_SMTP_USER ?? "";
-const AWS_SECRET_KEY = process.env.STX_SMTP_PASS ?? "";
-const TO_ADDRESSES = (process.env.CONTACT_TO ?? "info@sciencetrax.dev").split(",").map((s) => s.trim());
+const SMTP_HOST = process.env.STX_SMTP_HOST ?? "email-smtp.us-east-2.amazonaws.com";
+const SMTP_PORT = Number(process.env.STX_SMTP_PORT ?? 465);
+const SMTP_USER = process.env.STX_SMTP_USER ?? "";
+const SMTP_PASS = process.env.STX_SMTP_PASS ?? "";
+const TO_ADDRESS = process.env.CONTACT_TO ?? "info@sciencetrax.dev";
 const FROM_ADDRESS = process.env.CONTACT_FROM ?? "website@sciencetrax.dev";
 
 interface ContactPayload {
@@ -80,27 +82,38 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = validate(body);
 
-    const client = new SESv2Client({
-      region: AWS_REGION,
-      credentials: {
-        accessKeyId: AWS_ACCESS_KEY,
-        secretAccessKey: AWS_SECRET_KEY,
+    // Pre-resolve DNS to avoid EBUSY/ETIMEDOUT in serverless
+    let host = SMTP_HOST;
+    try {
+      const addresses = await dns.resolve4(SMTP_HOST);
+      if (addresses.length > 0) {
+        host = addresses[0];
+      }
+    } catch {
+      // Fall back to hostname if DNS resolve fails
+    }
+
+    const transporter = nodemailer.createTransport({
+      host,
+      port: SMTP_PORT,
+      secure: SMTP_PORT === 465,
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
+      tls: {
+        rejectUnauthorized: false,
+        servername: SMTP_HOST,
       },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 15000,
     });
 
-    await client.send(
-      new SendEmailCommand({
-        FromEmailAddress: `"Studytrax Website" <${FROM_ADDRESS}>`,
-        ReplyToAddresses: [`"${data.name}" <${data.email}>`],
-        Destination: { ToAddresses: TO_ADDRESSES },
-        Content: {
-          Simple: {
-            Subject: { Data: `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})` },
-            Body: { Html: { Data: buildHtml(data) } },
-          },
-        },
-      })
-    );
+    await transporter.sendMail({
+      from: `"Studytrax Website" <${FROM_ADDRESS}>`,
+      replyTo: `"${data.name}" <${data.email}>`,
+      to: TO_ADDRESS,
+      subject: `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})`,
+      html: buildHtml(data),
+    });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
