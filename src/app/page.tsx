@@ -65,9 +65,9 @@ const roles = [
     badgeBg: "rgba(10,95,142,0.08)",
     badgeColor: "var(--color-accent)",
     borderAccent: "var(--color-accent)",
-    // Doctor showing patient data on tablet — clinical consultation
-    image: "https://images.unsplash.com/photo-1666886573553-6548db92db79?w=800&q=80",
-    imageAlt: "Doctor showing patient data on tablet during clinical consultation",
+    // Doctor with tablet in clinical setting
+    image: "https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=800&q=80",
+    imageAlt: "Clinical investigator with tablet reviewing patient data",
   },
   {
     title: "Coordinators & Staff",
