@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { createHmac } from "crypto";
 
-const SMTP_HOST = process.env.STX_SMTP_HOST ?? "email-smtp.us-east-2.amazonaws.com";
-const SMTP_PORT = Number(process.env.STX_SMTP_PORT ?? 465);
-const SMTP_USER = process.env.STX_SMTP_USER ?? "";
-const SMTP_PASS = process.env.STX_SMTP_PASS ?? "";
-const TO_ADDRESS = process.env.CONTACT_TO ?? "info@sciencetrax.dev";
+const AWS_REGION = process.env.AWS_SES_REGION ?? "us-east-2";
+const ACCESS_KEY = process.env.STX_SMTP_USER ?? "";
+const SECRET_KEY_RAW = process.env.STX_SES_SECRET ?? process.env.STX_SMTP_PASS ?? "";
+const TO_ADDRESSES = (process.env.CONTACT_TO ?? "info@sciencetrax.dev").split(",").map((s) => s.trim());
 const FROM_ADDRESS = process.env.CONTACT_FROM ?? "website@sciencetrax.dev";
-
-// Pre-resolved IPs for email-smtp.us-east-2.amazonaws.com
-// Avoids DNS resolution failures (EBUSY) on Vercel serverless
-const SES_FALLBACK_IPS = ["18.188.75.34", "3.22.8.243", "3.23.0.113"];
 
 interface ContactPayload {
   name: string;
@@ -59,49 +54,100 @@ function buildHtml(data: ContactPayload): string {
     ["Message", data.message ?? "—"],
   ];
 
-  return `
-    <div style="font-family: -apple-system, sans-serif; max-width: 600px;">
-      <h2 style="color: #0a5f8e; margin-bottom: 16px;">New Contact Form Submission</h2>
-      <table style="width: 100%; border-collapse: collapse;">
-        ${rows
-          .map(
-            ([label, value]) => `
-          <tr>
-            <td style="padding: 8px 12px; border-bottom: 1px solid #eee; font-weight: 600; color: #333; width: 120px; vertical-align: top;">${label}</td>
-            <td style="padding: 8px 12px; border-bottom: 1px solid #eee; color: #555;">${value}</td>
-          </tr>`
-          )
-          .join("")}
-      </table>
-      <p style="margin-top: 20px; font-size: 12px; color: #999;">
-        Sent from studytrax.com contact form
-      </p>
-    </div>
-  `;
+  return `<div style="font-family:-apple-system,sans-serif;max-width:600px"><h2 style="color:#0a5f8e;margin-bottom:16px">New Contact Form Submission</h2><table style="width:100%;border-collapse:collapse">${rows.map(([label, value]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid #eee;font-weight:600;color:#333;width:120px;vertical-align:top">${label}</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#555">${value}</td></tr>`).join("")}</table><p style="margin-top:20px;font-size:12px;color:#999">Sent from studytrax.com contact form</p></div>`;
 }
 
-async function trySend(host: string, data: ContactPayload): Promise<void> {
-  const transporter = nodemailer.createTransport({
-    host,
-    port: SMTP_PORT,
-    secure: SMTP_PORT === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-    tls: {
-      rejectUnauthorized: false,
-      servername: SMTP_HOST,
+// AWS Signature V4 helpers
+function hmacSha256(key: Buffer | string, data: string): Buffer {
+  return createHmac("sha256", key).update(data).digest();
+}
+
+function sha256(data: string): string {
+  return createHmac("sha256", "").update(data).digest("hex");
+  // Actually need hash not hmac for body
+}
+
+function sha256Hash(data: string): string {
+  const { createHash } = require("crypto");
+  return createHash("sha256").update(data).digest("hex");
+}
+
+async function sendViaSesApi(subject: string, htmlBody: string, toAddresses: string[], from: string, replyTo: string) {
+  const host = `email.${AWS_REGION}.amazonaws.com`;
+  const endpoint = `https://${host}/`;
+
+  // Build SES query string
+  const params = new URLSearchParams();
+  params.set("Action", "SendEmail");
+  params.set("Source", from);
+  toAddresses.forEach((addr, i) => {
+    params.set(`Destination.ToAddresses.member.${i + 1}`, addr);
+  });
+  params.set("ReplyToAddresses.member.1", replyTo);
+  params.set("Message.Subject.Data", subject);
+  params.set("Message.Subject.Charset", "UTF-8");
+  params.set("Message.Body.Html.Data", htmlBody);
+  params.set("Message.Body.Html.Charset", "UTF-8");
+
+  const body = params.toString();
+  const now = new Date();
+  const dateStamp = now.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  const shortDate = dateStamp.slice(0, 8);
+
+  const payloadHash = sha256Hash(body);
+
+  const canonicalHeaders = `content-type:application/x-www-form-urlencoded\nhost:${host}\nx-amz-date:${dateStamp}\n`;
+  const signedHeaders = "content-type;host;x-amz-date";
+
+  const canonicalRequest = [
+    "POST",
+    "/",
+    "",
+    canonicalHeaders,
+    signedHeaders,
+    payloadHash,
+  ].join("\n");
+
+  const credentialScope = `${shortDate}/${AWS_REGION}/ses/aws4_request`;
+  const stringToSign = [
+    "AWS4-HMAC-SHA256",
+    dateStamp,
+    credentialScope,
+    sha256Hash(canonicalRequest),
+  ].join("\n");
+
+  const signingKey = hmacSha256(
+    hmacSha256(
+      hmacSha256(
+        hmacSha256(`AWS4${SECRET_KEY_RAW}`, shortDate),
+        AWS_REGION
+      ),
+      "ses"
+    ),
+    "aws4_request"
+  );
+
+  const signature = createHmac("sha256", signingKey).update(stringToSign).digest("hex");
+
+  const authHeader = `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+
+  const res = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Host": host,
+      "X-Amz-Date": dateStamp,
+      "Authorization": authHeader,
     },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 15000,
+    body,
   });
 
-  await transporter.sendMail({
-    from: `"Studytrax Website" <${FROM_ADDRESS}>`,
-    replyTo: `"${data.name}" <${data.email}>`,
-    to: TO_ADDRESS,
-    subject: `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})`,
-    html: buildHtml(data),
-  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`SES API error (${res.status}): ${text}`);
+  }
+
+  return res.text();
 }
 
 export async function POST(request: NextRequest) {
@@ -109,23 +155,15 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = validate(body);
 
-    // Try hostname first, then fall back to pre-resolved IPs
-    const hosts = [SMTP_HOST, ...SES_FALLBACK_IPS];
-    let lastError: Error | null = null;
+    await sendViaSesApi(
+      `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})`,
+      buildHtml(data),
+      TO_ADDRESSES,
+      `"Studytrax Website" <${FROM_ADDRESS}>`,
+      `"${data.name}" <${data.email}>`
+    );
 
-    for (const host of hosts) {
-      try {
-        await trySend(host, data);
-        return NextResponse.json({ ok: true });
-      } catch (err) {
-        lastError = err instanceof Error ? err : new Error(String(err));
-        if (!lastError.message.includes("EBUSY") && !lastError.message.includes("ETIMEDOUT") && !lastError.message.includes("getaddrinfo")) {
-          throw lastError;
-        }
-      }
-    }
-
-    throw lastError ?? new Error("All SMTP hosts failed");
+    return NextResponse.json({ ok: true });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     console.error("Contact form error:", message);
