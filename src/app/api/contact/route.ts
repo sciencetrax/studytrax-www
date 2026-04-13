@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import dns from "dns/promises";
 
 const SMTP_HOST = process.env.STX_SMTP_HOST ?? "email-smtp.us-east-2.amazonaws.com";
 const SMTP_PORT = Number(process.env.STX_SMTP_PORT ?? 465);
@@ -8,6 +7,10 @@ const SMTP_USER = process.env.STX_SMTP_USER ?? "";
 const SMTP_PASS = process.env.STX_SMTP_PASS ?? "";
 const TO_ADDRESS = process.env.CONTACT_TO ?? "info@sciencetrax.dev";
 const FROM_ADDRESS = process.env.CONTACT_FROM ?? "website@sciencetrax.dev";
+
+// Pre-resolved IPs for email-smtp.us-east-2.amazonaws.com
+// Avoids DNS resolution failures (EBUSY) on Vercel serverless
+const SES_FALLBACK_IPS = ["18.188.75.34", "3.22.8.243", "3.23.0.113"];
 
 interface ContactPayload {
   name: string;
@@ -77,45 +80,52 @@ function buildHtml(data: ContactPayload): string {
   `;
 }
 
+async function trySend(host: string, data: ContactPayload): Promise<void> {
+  const transporter = nodemailer.createTransport({
+    host,
+    port: SMTP_PORT,
+    secure: SMTP_PORT === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    tls: {
+      rejectUnauthorized: false,
+      servername: SMTP_HOST,
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
+  });
+
+  await transporter.sendMail({
+    from: `"Studytrax Website" <${FROM_ADDRESS}>`,
+    replyTo: `"${data.name}" <${data.email}>`,
+    to: TO_ADDRESS,
+    subject: `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})`,
+    html: buildHtml(data),
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const data = validate(body);
 
-    // Pre-resolve DNS to avoid EBUSY/ETIMEDOUT in serverless
-    let host = SMTP_HOST;
-    try {
-      const addresses = await dns.resolve4(SMTP_HOST);
-      if (addresses.length > 0) {
-        host = addresses[0];
+    // Try hostname first, then fall back to pre-resolved IPs
+    const hosts = [SMTP_HOST, ...SES_FALLBACK_IPS];
+    let lastError: Error | null = null;
+
+    for (const host of hosts) {
+      try {
+        await trySend(host, data);
+        return NextResponse.json({ ok: true });
+      } catch (err) {
+        lastError = err instanceof Error ? err : new Error(String(err));
+        if (!lastError.message.includes("EBUSY") && !lastError.message.includes("ETIMEDOUT") && !lastError.message.includes("getaddrinfo")) {
+          throw lastError;
+        }
       }
-    } catch {
-      // Fall back to hostname if DNS resolve fails
     }
 
-    const transporter = nodemailer.createTransport({
-      host,
-      port: SMTP_PORT,
-      secure: SMTP_PORT === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-      tls: {
-        rejectUnauthorized: false,
-        servername: SMTP_HOST,
-      },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 15000,
-    });
-
-    await transporter.sendMail({
-      from: `"Studytrax Website" <${FROM_ADDRESS}>`,
-      replyTo: `"${data.name}" <${data.email}>`,
-      to: TO_ADDRESS,
-      subject: `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})`,
-      html: buildHtml(data),
-    });
-
-    return NextResponse.json({ ok: true });
+    throw lastError ?? new Error("All SMTP hosts failed");
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     console.error("Contact form error:", message);
