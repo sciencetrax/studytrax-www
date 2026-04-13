@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import SectionBlock from "@/components/SectionBlock";
 
 export const metadata: Metadata = {
   title: "Workbench | Publication Workflow for Clinical Research",
@@ -17,42 +16,34 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.studytrax.com/workbench" },
 };
 
-const blocks = [
-  {
-    heading: "One place for everything.",
-    body: "Create a dedicated workspace for each manuscript, poster, report, or initiative. Pull in files, images, datasets, and statistical output. Bring in co-authors and collaborators and give them access to the data and output they need, nothing more, nothing less.",
-  },
-  {
-    heading: "Build your data, your way.",
-    body: "Point-and-click dataset creation without needing to understand the underlying data model. Select entire forms or individual variables. Recode and transform variables on the fly, dummy coding, collapsing categories, creating calculated fields. Check distributions, spot outliers, and resolve data quality issues before formal analysis begins.",
-  },
-  {
-    heading: "Tables that update themselves.",
-    body: "Design publication-ready tables by adding variable rows and columns, choosing summary options, and relabeling variables instantly. Generate IRB, progress, safety, and administrative reports in a word-processor interface that blends text, tables, and images. Everything is dynamically linked to the live study data, click update and every number refreshes.",
-  },
-  {
-    heading: "Copy everything forward.",
-    body: "Duplicate an entire workspace, all variable coding, table designs, analyses, and formatting, and bring it into the next iteration. Your Year 1 longitudinal analysis becomes the Year 2 template in one click. Annual IRB reports roll forward. Every piece of dissemination work you did on the last project is reusable on the next one.",
-  },
-];
+// Blocks rendered inline below due to mixed content (paragraphs + lists)
 
 export default function WorkbenchPage() {
   return (
     <>
       {/* Hero */}
       <section
-        className="py-20 sm:py-28 px-4 sm:px-6"
+        className="py-12 px-4 sm:px-6"
         style={{ backgroundColor: "var(--color-surface)" }}
       >
         <div className="max-w-4xl mx-auto">
-          <h1 className="mb-6">Where data becomes results.</h1>
+          <h1 className="mb-6">Where your data becomes{" "}
+            <span style={{ color: "var(--color-accent)" }}>Discoveries</span>
+          </h1>
+          <p
+            className="text-lg sm:text-xl leading-relaxed max-w-3xl mb-4"
+            style={{ color: "var(--color-muted)" }}
+          >
+            The Workbench is the bridge between collecting data and producing results.
+            It transforms raw study data into publication-ready output, faster, smarter,
+            and with far less effort.
+          </p>
           <p
             className="text-lg sm:text-xl leading-relaxed max-w-3xl"
             style={{ color: "var(--color-muted)" }}
           >
-            The Workbench is the space between collecting your data and getting it into the world.
-            Organize every piece of academic and administrative output, prepare and analyze datasets,
-            build publication-ready tables, and carry all of it forward to the next project.
+            Design datasets, explore your data, build dynamic tables, and generate reports,
+            all in one connected workspace that stays in sync with your study.
           </p>
         </div>
       </section>
@@ -60,9 +51,129 @@ export default function WorkbenchPage() {
       {/* Feature blocks */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid sm:grid-cols-2 gap-6">
-          {blocks.map((block, i) => (
-            <SectionBlock key={i} heading={block.heading} body={block.body} />
-          ))}
+
+          {/* Block 1 */}
+          <div
+            className="rounded-lg p-7"
+            style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+          >
+            <h2 className="text-lg font-semibold mb-3">One workspace for every initiative</h2>
+            <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--color-muted)" }}>
+              Create a dedicated workspace for each manuscript, abstract, poster, grant report, IRB submission, or quality initiative.
+            </p>
+            <p className="text-sm leading-relaxed mb-2" style={{ color: "var(--color-muted)" }}>
+              Bring everything together:
+            </p>
+            <ul className="text-sm leading-relaxed mb-3 space-y-1 pl-5 list-disc" style={{ color: "var(--color-muted)" }}>
+              <li>Datasets, tables, and analyses</li>
+              <li>Files, images, and statistical outputs</li>
+              <li>Co-authors and collaborators with precise, role-based access</li>
+            </ul>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+              Everyone works from the same live data, no version confusion, no unnecessary access.
+            </p>
+          </div>
+
+          {/* Block 2 */}
+          <div
+            className="rounded-lg p-7"
+            style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+          >
+            <h2 className="text-lg font-semibold mb-3">Build datasets your way, no coding required</h2>
+            <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--color-muted)" }}>
+              Move from raw data to analysis-ready datasets in minutes.
+            </p>
+            <ul className="text-sm leading-relaxed mb-3 space-y-1 pl-5 list-disc" style={{ color: "var(--color-muted)" }}>
+              <li>Point-and-click selection of forms or individual variables</li>
+              <li>Recode, transform, dummy-code, and create calculated fields on the fly</li>
+              <li>Collapse categories and tailor datasets to your exact needs</li>
+              <li>Instantly review distributions, identify outliers, and resolve data issues early</li>
+            </ul>
+            <p className="text-sm font-medium leading-relaxed" style={{ color: "var(--color-text)" }}>
+              No programming. No bottlenecks. No delays.
+            </p>
+          </div>
+
+          {/* Block 3 */}
+          <div
+            className="rounded-lg p-7"
+            style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+          >
+            <h2 className="text-lg font-semibold mb-3">Tables that stay in sync with your data</h2>
+            <p className="text-sm leading-relaxed mb-2" style={{ color: "var(--color-muted)" }}>
+              Create publication-ready tables directly from live study data:
+            </p>
+            <ul className="text-sm leading-relaxed mb-3 space-y-1 pl-5 list-disc" style={{ color: "var(--color-muted)" }}>
+              <li>Add variables as rows or columns</li>
+              <li>Choose summary statistics (n, %, mean, SD, and more)</li>
+              <li>Relabel and format instantly</li>
+            </ul>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+              Every table is dynamically linked to your data, so when your data updates, your tables update.
+              No manual edits. No rework. No last-minute scrambling.
+            </p>
+          </div>
+
+          {/* Block 4 */}
+          <div
+            className="rounded-lg p-7"
+            style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+          >
+            <h2 className="text-lg font-semibold mb-3">Reports that write themselves</h2>
+            <p className="text-sm leading-relaxed mb-2" style={{ color: "var(--color-muted)" }}>
+              Build professional reports in a familiar, document-style interface.
+            </p>
+            <p className="text-sm leading-relaxed mb-2" style={{ color: "var(--color-muted)" }}>
+              Combine text, self-updating tables, charts, and images to generate:
+            </p>
+            <ul className="text-sm leading-relaxed mb-3 space-y-1 pl-5 list-disc" style={{ color: "var(--color-muted)" }}>
+              <li>IRB submissions and annual reports</li>
+              <li>Progress and safety summaries</li>
+              <li>Administrative and operational reports</li>
+            </ul>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+              Everything stays connected to your data, eliminating copy-paste errors and version control issues.
+            </p>
+          </div>
+
+          {/* Block 5 */}
+          <div
+            className="rounded-lg p-7"
+            style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+          >
+            <h2 className="text-lg font-semibold mb-3">Reuse everything. Accelerate every next study.</h2>
+            <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--color-muted)" }}>
+              Turn your work into a repeatable advantage.
+            </p>
+            <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--color-muted)" }}>
+              Duplicate an entire workspace, including datasets, transformations, tables, reports, formatting, and supporting files, and carry it forward instantly.
+            </p>
+            <ul className="text-sm leading-relaxed mb-3 space-y-1 pl-5 list-disc" style={{ color: "var(--color-muted)" }}>
+              <li>Year 1 analysis becomes your Year 2 starting point</li>
+              <li>IRB reports roll forward automatically</li>
+              <li>Proven outputs become reusable templates</li>
+            </ul>
+            <p className="text-sm font-medium leading-relaxed" style={{ color: "var(--color-text)" }}>
+              What used to take weeks now takes minutes.
+            </p>
+          </div>
+
+          {/* Block 6 */}
+          <div
+            className="rounded-lg p-7"
+            style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+          >
+            <h2 className="text-lg font-semibold mb-3">From data collection to real-world impact</h2>
+            <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--color-muted)" }}>
+              Whether you&apos;re an investigator preparing manuscripts or a statistician coordinating analyses across studies, the Workbench removes the disconnect between data and output.
+            </p>
+            <p className="text-sm font-medium leading-relaxed" style={{ color: "var(--color-text)" }}>
+              Publish faster.<br />
+              Reuse your best work.<br />
+              Spend less time on mechanics, and more time on science.
+            </p>
+          </div>
+
         </div>
       </section>
 

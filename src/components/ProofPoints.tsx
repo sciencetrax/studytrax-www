@@ -2,7 +2,7 @@ const points = [
   { stat: "#1", label: "With Academic And Disease Organizations" },
   { stat: "Two Decades", label: "of Experience" },
   { stat: "100+", label: "Medical Centers" },
-  { stat: "1000+", label: "Trials" },
+  { stat: "1000+", label: "Trials & Registries" },
 ];
 
 export default function ProofPoints() {

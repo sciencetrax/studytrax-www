@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -27,11 +28,16 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="text-xl font-bold tracking-tight"
-            style={{ color: "var(--color-accent)" }}
             aria-label="Studytrax home"
           >
-            Studytrax
+            <Image
+              src="/images/studytrax-logo.png"
+              alt="StudyTrax"
+              width={180}
+              height={18}
+              priority
+              className="h-6 w-auto"
+            />
           </Link>
 
           {/* Desktop nav */}

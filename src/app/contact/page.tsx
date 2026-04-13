@@ -36,11 +36,13 @@ export default function ContactPage() {
 
       {/* Hero */}
       <section
-        className="py-20 sm:py-28 px-4 sm:px-6"
+        className="py-12 px-4 sm:px-6"
         style={{ backgroundColor: "var(--color-surface)" }}
       >
         <div className="max-w-4xl mx-auto">
-          <h1 className="mb-6">Five minutes is all it takes.</h1>
+          <h1 className="mb-6">Check the fit in{" "}
+            <span style={{ color: "var(--color-accent)" }}>Five Minutes</span>.
+          </h1>
           <p
             className="text-lg sm:text-xl leading-relaxed max-w-3xl"
             style={{ color: "var(--color-muted)" }}
@@ -60,39 +62,38 @@ export default function ContactPage() {
             {/* How pricing works */}
             <div>
               <h2 className="text-lg font-semibold mb-3">How pricing works.</h2>
+              <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--color-muted)" }}>
+                Studytrax licensing is structured on a per-project basis, designed to align with the
+                realities of academic research and nonprofit organizations, where timelines, scope,
+                and funding can vary.
+              </p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                Studytrax licensing is handled on a per-project basis, tailored to work within the
-                realities of academic research and nonprofit disease organizations, where funding
-                cycles go up and down. Every license includes access to the full feature set.
-                Licensing is not dependent on the number of participants, the number of sites, or
-                which features you use.
+                Every license includes full access to the platform. Pricing is not tied to
+                participant counts, number of sites, or feature usage, allowing your study to evolve
+                without constraint.
               </p>
             </div>
 
             {/* What to expect */}
             <div>
               <h2 className="text-lg font-semibold mb-3">What to expect.</h2>
+              <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--color-muted)" }}>
+                We start with a quick conversation to understand your study, timeline, and goals.
+              </p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                A quick chat about your study, your timeline, and your needs. From there we put
-                together a proposal that fits your budget. No pressure, no obligation.
+                From there, we&apos;ll outline an approach that fits your project and aligns with
+                how your study is structured, clear, straightforward, and easy to evaluate. No
+                pressure, no obligation.
               </p>
             </div>
 
-            {/* Proof points callout */}
-            <div
-              className="rounded-lg p-5"
-              style={{
-                backgroundColor: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius)",
-              }}
-            >
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--color-accent)" }}>
-                Two decades of experience.
-              </p>
-              <p className="text-sm" style={{ color: "var(--color-muted)" }}>
-                100+ medical centers, 1000+ trials. We've seen every budget scenario and made it
-                work.
+            {/* Experience */}
+            <div>
+              <h2 className="text-lg font-semibold mb-3">Built on experience.</h2>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+                With over two decades of experience supporting 100+ medical centers and 1,000+
+                studies, we&apos;ve seen every budget scenario and{" "}
+                <strong style={{ color: "var(--color-accent)" }}>made it work</strong>.
               </p>
             </div>
           </div>

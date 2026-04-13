@@ -70,6 +70,55 @@ export default function ContactForm() {
 
       <div>
         <label
+          htmlFor="contact-email"
+          className="block text-sm font-medium mb-1"
+          style={{ color: "var(--color-text)" }}
+        >
+          Email <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="contact-email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          className="w-full px-4 py-2.5 rounded border text-sm transition-colors"
+          style={{
+            borderColor: "var(--color-border)",
+            borderRadius: "var(--radius)",
+            color: "var(--color-text)",
+            backgroundColor: "#fff",
+          }}
+          placeholder="you@institution.edu"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="contact-phone"
+          className="block text-sm font-medium mb-1"
+          style={{ color: "var(--color-text)" }}
+        >
+          Phone
+        </label>
+        <input
+          id="contact-phone"
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          className="w-full px-4 py-2.5 rounded border text-sm transition-colors"
+          style={{
+            borderColor: "var(--color-border)",
+            borderRadius: "var(--radius)",
+            color: "var(--color-text)",
+            backgroundColor: "#fff",
+          }}
+          placeholder="(555) 555-5555"
+        />
+      </div>
+
+      <div>
+        <label
           htmlFor="contact-institution"
           className="block text-sm font-medium mb-1"
           style={{ color: "var(--color-text)" }}
