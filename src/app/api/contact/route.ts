@@ -1,22 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 
-const SMTP_HOST = process.env.STX_SMTP_HOST ?? "mail.sciencetrax.dev";
-const SMTP_PORT = Number(process.env.STX_SMTP_PORT ?? 465);
-const SMTP_USER = process.env.STX_SMTP_USER ?? "";
-const SMTP_PASS = process.env.STX_SMTP_PASS ?? "";
-const TO_ADDRESS = process.env.CONTACT_TO ?? "info@sciencetrax.dev";
+const AWS_REGION = process.env.AWS_SES_REGION ?? "us-east-2";
+const AWS_ACCESS_KEY = process.env.STX_SMTP_USER ?? "";
+const AWS_SECRET_KEY = process.env.STX_SMTP_PASS ?? "";
+const TO_ADDRESSES = (process.env.CONTACT_TO ?? "info@sciencetrax.dev").split(",").map((s) => s.trim());
 const FROM_ADDRESS = process.env.CONTACT_FROM ?? "website@sciencetrax.dev";
-
-function getTransporter() {
-  return nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_PORT === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-    tls: { rejectUnauthorized: false },
-  });
-}
 
 interface ContactPayload {
   name: string;
@@ -91,14 +80,27 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = validate(body);
 
-    const transporter = getTransporter();
-    await transporter.sendMail({
-      from: `"Studytrax Website" <${FROM_ADDRESS}>`,
-      replyTo: `"${data.name}" <${data.email}>`,
-      to: TO_ADDRESS,
-      subject: `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})`,
-      html: buildHtml(data),
+    const client = new SESv2Client({
+      region: AWS_REGION,
+      credentials: {
+        accessKeyId: AWS_ACCESS_KEY,
+        secretAccessKey: AWS_SECRET_KEY,
+      },
     });
+
+    await client.send(
+      new SendEmailCommand({
+        FromEmailAddress: `"Studytrax Website" <${FROM_ADDRESS}>`,
+        ReplyToAddresses: [`"${data.name}" <${data.email}>`],
+        Destination: { ToAddresses: TO_ADDRESSES },
+        Content: {
+          Simple: {
+            Subject: { Data: `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})` },
+            Body: { Html: { Data: buildHtml(data) } },
+          },
+        },
+      })
+    );
 
     return NextResponse.json({ ok: true });
   } catch (err) {
