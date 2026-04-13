@@ -8,13 +8,15 @@ const SMTP_PASS = process.env.STX_SMTP_PASS ?? "";
 const TO_ADDRESS = process.env.CONTACT_TO ?? "info@sciencetrax.dev";
 const FROM_ADDRESS = process.env.CONTACT_FROM ?? "website@sciencetrax.dev";
 
-const transporter = nodemailer.createTransport({
-  host: SMTP_HOST,
-  port: SMTP_PORT,
-  secure: SMTP_PORT === 465,
-  auth: { user: SMTP_USER, pass: SMTP_PASS },
-  tls: { rejectUnauthorized: false },
-});
+function getTransporter() {
+  return nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_PORT === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    tls: { rejectUnauthorized: false },
+  });
+}
 
 interface ContactPayload {
   name: string;
@@ -89,6 +91,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = validate(body);
 
+    const transporter = getTransporter();
     await transporter.sendMail({
       from: `"Studytrax Website" <${FROM_ADDRESS}>`,
       replyTo: `"${data.name}" <${data.email}>`,
