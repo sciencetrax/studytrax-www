@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createHmac } from "crypto";
 
 const AWS_REGION = process.env.AWS_SES_REGION ?? "us-east-2";
-const ACCESS_KEY = process.env.STX_SMTP_USER ?? "";
-const SECRET_KEY_RAW = process.env.STX_SES_SECRET ?? process.env.STX_SMTP_PASS ?? "";
+const ACCESS_KEY = (process.env.STX_SMTP_USER ?? "").trim();
+const SECRET_KEY_RAW = (process.env.STX_SES_SECRET ?? process.env.STX_SMTP_PASS ?? "").trim();
 const TO_ADDRESSES = (process.env.CONTACT_TO ?? "info@sciencetrax.dev").split(",").map((s) => s.trim());
 const FROM_ADDRESS = process.env.CONTACT_FROM ?? "website@sciencetrax.dev";
 
