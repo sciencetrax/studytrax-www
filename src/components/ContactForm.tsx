@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const roles = [
   "PI",
@@ -22,6 +22,9 @@ const topics = [
 export default function ContactForm() {
   const searchParams = useSearchParams();
   const topicRef = useRef<HTMLSelectElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     const topicParam = searchParams.get("topic");
@@ -35,11 +38,50 @@ export default function ContactForm() {
     }
   }, [searchParams]);
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+    setErrorMsg("");
+
+    const fd = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(fd.entries());
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error ?? "Something went wrong");
+      }
+      setStatus("sent");
+      formRef.current?.reset();
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
+    }
+  }
+
+  if (status === "sent") {
+    return (
+      <div
+        className="rounded-lg p-8 text-center"
+        style={{ backgroundColor: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+      >
+        <h3 className="text-lg font-semibold mb-2" style={{ color: "var(--color-accent)" }}>Message sent!</h3>
+        <p className="text-sm" style={{ color: "var(--color-muted)" }}>
+          We&apos;ll get back to you shortly. Thank you for reaching out.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    /* [PLACEHOLDER: form-endpoint] */
     <form
-      method="POST"
-      action="#"
+      ref={formRef}
+      onSubmit={handleSubmit}
       className="space-y-5"
       aria-label="Contact form"
     >
@@ -230,12 +272,19 @@ export default function ContactForm() {
         />
       </div>
 
+      {status === "error" && (
+        <p className="text-sm font-medium" style={{ color: "#c8552c" }}>
+          {errorMsg || "Something went wrong. Please try again."}
+        </p>
+      )}
+
       <button
         type="submit"
-        className="w-full sm:w-auto px-8 py-3 rounded text-sm font-semibold text-white transition-opacity hover:opacity-90"
+        disabled={status === "sending"}
+        className="w-full sm:w-auto px-8 py-3 rounded text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
         style={{ backgroundColor: "var(--color-accent)", borderRadius: "var(--radius)" }}
       >
-        Send Message
+        {status === "sending" ? "Sending..." : "Send Message"}
       </button>
     </form>
   );

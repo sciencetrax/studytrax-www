@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -17,11 +17,19 @@ const navLinks = [
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
-      className="sticky top-0 z-50 bg-white border-b"
-      style={{ borderColor: "var(--color-border)" }}
+      className={`sticky top-0 z-50 bg-white border-b transition-all duration-300 ${scrolled ? "header-scrolled" : ""}`}
+      style={{ borderColor: scrolled ? "rgba(219,227,236,0.6)" : "var(--color-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
@@ -29,10 +37,11 @@ export default function Header() {
           <Link
             href="/"
             aria-label="Studytrax home"
+            className="shrink-0"
           >
             <Image
               src="/images/studytrax-logo.png"
-              alt="StudyTrax"
+              alt="Studytrax"
               width={180}
               height={18}
               priority
@@ -41,7 +50,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1">
+          <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => {
               const isCurrent =
                 link.href === "/"
@@ -52,10 +61,10 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={isCurrent ? "page" : undefined}
-                  className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
+                  className={`px-3 py-2 rounded text-sm font-medium transition-all duration-200 ${
                     isCurrent
-                      ? "text-white"
-                      : "hover:bg-gray-100"
+                      ? "text-white shadow-sm"
+                      : "hover:bg-blue-50 hover:text-[--color-accent]"
                   }`}
                   style={
                     isCurrent
@@ -67,6 +76,15 @@ export default function Header() {
                 </Link>
               );
             })}
+
+            <Link
+              href="/contact"
+              className="ml-3 px-4 py-2 rounded text-sm font-semibold btn-primary"
+              style={{ padding: "0.5rem 1rem" }}
+              aria-label="Get started with Studytrax"
+            >
+              Get Started
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -110,7 +128,7 @@ export default function Header() {
                 aria-current={isCurrent ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
                 className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
-                  isCurrent ? "text-white" : "hover:bg-gray-100"
+                  isCurrent ? "text-white" : "hover:bg-blue-50"
                 }`}
                 style={
                   isCurrent
@@ -122,6 +140,13 @@ export default function Header() {
               </Link>
             );
           })}
+          <Link
+            href="/contact"
+            onClick={() => setMenuOpen(false)}
+            className="mt-2 px-4 py-2.5 rounded text-sm font-semibold text-center btn-primary"
+          >
+            Get Started
+          </Link>
         </nav>
       )}
     </header>
