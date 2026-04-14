@@ -3,6 +3,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -43,6 +44,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
+        <ScrollToTop />
         <Header />
         <main id="main-content" className="flex-1">
           {children}
