@@ -93,7 +93,7 @@ export default function ContactPage() {
               <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
                 With over two decades of experience supporting 100+ medical centers and 1,000+
                 studies, we&apos;ve seen every budget scenario and{" "}
-                <strong style={{ color: "var(--color-accent)" }}>made it work</strong>.
+                <strong style={{ color: "var(--color-accent)" }}>always make it work</strong>.
               </p>
             </div>
           </div>

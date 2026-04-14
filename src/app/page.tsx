@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import TestimonialCarousel, { type Testimonial } from "@/components/TestimonialCarousel";
 import ProofPoints from "@/components/ProofPoints";
-import { Users, FlaskConical, BarChart3, ClipboardList, UserCheck, Zap } from "lucide-react";
+import { Users, FlaskConical, BarChart3, ClipboardList, UserCheck, Zap, PlayCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Studytrax | EDC for Academic Research & Disease Organizations",
@@ -256,6 +256,8 @@ export default function HomePage() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
                 animation: "shimmer 3s linear infinite",
+                lineHeight: 1.3,
+                paddingBottom: "0.1em",
               }}
             >
               Starting Line
@@ -292,6 +294,48 @@ export default function HomePage() {
               <animateTransform attributeName="transform" type="translate" values="0,0;0,6;0,0" dur="1.6s" repeatCount="indefinite" />
             </rect>
           </svg>
+        </div>
+      </section>
+
+      {/* ── Video Overview ──────────────────────────────────────── */}
+      <section
+        className="py-16 sm:py-20 px-4 sm:px-6"
+        style={{ backgroundColor: "var(--color-surface)" }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <div
+              className="shrink-0 flex items-center justify-center"
+              style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "12px",
+                background: "linear-gradient(135deg, rgba(10,95,142,0.1), rgba(26,128,186,0.06))",
+                color: "var(--color-accent)",
+              }}
+            >
+              <PlayCircle size={24} />
+            </div>
+            <h2 style={{ color: "var(--color-accent)" }}>See Studytrax in action</h2>
+          </div>
+          <div
+            className="relative w-full rounded-lg overflow-hidden"
+            style={{
+              paddingBottom: "56.25%",
+              border: "1px solid var(--color-border)",
+              borderRadius: "var(--radius)",
+              boxShadow: "0 8px 32px rgba(10, 95, 142, 0.1)",
+            }}
+          >
+            <iframe
+              src="https://player.vimeo.com/video/494894766?h=&title=0&byline=0&portrait=0&loop=1"
+              className="absolute inset-0 w-full h-full"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title="Studytrax platform overview"
+              style={{ border: "none" }}
+            />
+          </div>
         </div>
       </section>
 

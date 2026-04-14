@@ -13,10 +13,9 @@ const roles = [
 
 const topics = [
   "Grant Support",
-  "Pricing",
   "Demo",
-  "REDCap Evaluation",
   "General Inquiry",
+  "Other",
 ];
 
 export default function ContactForm() {
@@ -165,13 +164,12 @@ export default function ContactForm() {
           className="block text-sm font-medium mb-1"
           style={{ color: "var(--color-text)" }}
         >
-          Institution <span aria-hidden="true">*</span>
+          Institution
         </label>
         <input
           id="contact-institution"
           name="institution"
           type="text"
-          required
           autoComplete="organization"
           className="w-full px-4 py-2.5 rounded border text-sm transition-colors"
           style={{
@@ -190,12 +188,11 @@ export default function ContactForm() {
           className="block text-sm font-medium mb-1"
           style={{ color: "var(--color-text)" }}
         >
-          Role <span aria-hidden="true">*</span>
+          Role
         </label>
         <select
           id="contact-role"
           name="role"
-          required
           className="w-full px-4 py-2.5 rounded border text-sm transition-colors appearance-none"
           style={{
             borderColor: "var(--color-border)",

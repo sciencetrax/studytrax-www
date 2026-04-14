@@ -50,6 +50,7 @@ export default function Footer() {
                 { href: "/for-grant-writers", label: "For Grant Writers" },
                 { href: "/compare-to-redcap", label: "Compare to REDCap" },
                 { href: "/compliance-trust", label: "Compliance & Trust" },
+                { href: "/support", label: "Support" },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (
                 <li key={link.href}>

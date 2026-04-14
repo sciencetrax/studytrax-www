@@ -11,8 +11,8 @@ interface ContactPayload {
   name: string;
   email: string;
   phone?: string;
-  institution: string;
-  role: string;
+  institution?: string;
+  role?: string;
   topic: string;
   message?: string;
 }
@@ -25,8 +25,8 @@ function validate(body: unknown): ContactPayload {
   const role = String(b.role ?? "").trim();
   const topic = String(b.topic ?? "").trim();
 
-  if (!name || !email || !institution || !role || !topic) {
-    throw new Error("Missing required fields: name, email, institution, role, topic");
+  if (!name || !email || !topic) {
+    throw new Error("Missing required fields: name, email, topic");
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     throw new Error("Invalid email address");
@@ -36,8 +36,8 @@ function validate(body: unknown): ContactPayload {
     name,
     email,
     phone: String(b.phone ?? "").trim() || undefined,
-    institution,
-    role,
+    institution: institution || undefined,
+    role: role || undefined,
     topic,
     message: String(b.message ?? "").trim() || undefined,
   };
