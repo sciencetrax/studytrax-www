@@ -76,9 +76,16 @@ export default function Header() {
               );
             })}
 
+            <a
+              href="https://my.studytrax.com"
+              className="ml-3 px-4 py-2 rounded text-sm font-medium transition-colors hover:text-[--color-accent]"
+              style={{ color: "var(--color-text)", border: "1px solid var(--color-border)", borderRadius: "var(--radius)" }}
+            >
+              Sign In
+            </a>
             <Link
               href="/contact"
-              className="ml-3 px-4 py-2 rounded text-sm font-semibold btn-primary"
+              className="ml-2 px-4 py-2 rounded text-sm font-semibold btn-primary"
               style={{ padding: "0.5rem 1rem" }}
               aria-label="Get started with Studytrax"
             >
@@ -139,10 +146,18 @@ export default function Header() {
               </Link>
             );
           })}
+          <a
+            href="https://my.studytrax.com"
+            onClick={() => setMenuOpen(false)}
+            className="mt-2 px-4 py-2.5 rounded text-sm font-medium text-center transition-colors"
+            style={{ color: "var(--color-text)", border: "1px solid var(--color-border)" }}
+          >
+            Sign In
+          </a>
           <Link
             href="/contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-2 px-4 py-2.5 rounded text-sm font-semibold text-center btn-primary"
+            className="px-4 py-2.5 rounded text-sm font-semibold text-center btn-primary"
           >
             Get Started
           </Link>
