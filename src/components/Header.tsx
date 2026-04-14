@@ -11,7 +11,6 @@ const navLinks = [
   { href: "/for-grant-writers", label: "For Grant Writers" },
   { href: "/compare-to-redcap", label: "Compare to REDCap" },
   { href: "/compliance-trust", label: "Compliance & Trust" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {
@@ -61,14 +60,14 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={isCurrent ? "page" : undefined}
-                  className={`px-3 py-2 rounded text-sm font-medium transition-all duration-200 ${
+                  className={`px-3 py-2 text-sm font-medium transition-all duration-200 ${
                     isCurrent
                       ? "font-semibold"
                       : "hover:text-[--color-accent]"
                   }`}
                   style={
                     isCurrent
-                      ? { color: "var(--color-accent)" }
+                      ? { color: "var(--color-accent)", borderBottom: "2px solid var(--color-accent)", borderRadius: 0 }
                       : { color: "var(--color-text)" }
                   }
                 >
