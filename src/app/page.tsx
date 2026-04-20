@@ -340,7 +340,10 @@ export default function HomePage() {
       </section>
 
       {/* ── Three Pillars ─────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20" aria-label="Platform pillars">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-0" aria-label="Platform pillars">
+        <h2 className="text-center mb-10" style={{ color: "var(--color-accent)" }}>
+          From simple survey to integrated research
+        </h2>
         <div className="grid sm:grid-cols-3 gap-6">
           {pillars.map(({ heading, body, variant, Icon, iconBg, iconColor }) => (
             <div
@@ -365,16 +368,28 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+
+        {/* Integration hub diagram */}
+        <div className="flex justify-center mt-6 mb-4">
+          <Image
+            src="/images/integration-hub.png"
+            alt="Studytrax as the integration hub for studies and registries, connecting Participant Portal, Biorepository, EMR, Wearables, Devices, LIMS, and Staff"
+            width={1600}
+            height={900}
+            className="block w-full max-w-full h-auto"
+            sizes="(max-width: 1280px) 100vw, 1280px"
+          />
+        </div>
       </section>
 
       {/* ── Role Blocks ───────────────────────────────────────────── */}
       <section
-        className="py-20 px-4 sm:px-6"
+        className="pt-14 pb-20 px-4 sm:px-6"
         style={{ backgroundColor: "var(--color-surface)" }}
         aria-label="Who uses Studytrax"
       >
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-center mb-10">Built for everyone on the research team.</h2>
+          <h2 className="text-center mb-10" style={{ color: "var(--color-accent)" }}>Built for everyone on the research team.</h2>
           <div className="grid sm:grid-cols-3 gap-6">
             {roles.map(({ title, body, Icon, badgeBg, badgeColor, borderAccent, image, imageAlt }) => (
               <div
@@ -469,7 +484,7 @@ export default function HomePage() {
         aria-label="Testimonials"
       >
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-center mb-10">Trusted by researchers.</h2>
+          <h2 className="text-center mb-10" style={{ color: "var(--color-accent)" }}>Trusted by researchers.</h2>
           <TestimonialCarousel testimonials={testimonials} />
         </div>
       </section>
