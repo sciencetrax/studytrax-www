@@ -378,9 +378,7 @@ h3 { font-size: clamp(1.1rem, 2.5vw, 1.563rem); font-weight: 600; line-height: 1
 /* ─── Header scroll state ─────────────────────────────────── */
 
 .header-scrolled {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.92) !important;
+  background: #ffffff !important;
   box-shadow: 0 2px 20px rgba(10, 95, 142, 0.1);
 }
 

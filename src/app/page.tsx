@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import TestimonialCarousel, { type Testimonial } from "@/components/TestimonialCarousel";
+import { type Testimonial } from "@/components/TestimonialCarousel";
 import ProofPoints from "@/components/ProofPoints";
 import { Users, FlaskConical, BarChart3, ClipboardList, UserCheck, Zap, PlayCircle } from "lucide-react";
 
@@ -87,14 +87,20 @@ const roles = [
     badgeBg: "rgba(91,62,168,0.08)",
     badgeColor: "var(--color-violet)",
     borderAccent: "var(--color-violet)",
-    // Patient using phone/portal — photo by National Cancer Institute
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80",
-    imageAlt: "Research participant using patient portal",
+    image: "/images/nurse.png",
+    imageAlt: "Research participant smiling while looking at a tablet",
   },
 ];
 
 // Testimonials from https://www.studytrax.com/real-world-evidence
 const testimonials: Testimonial[] = [
+  {
+    name: "Dan Draine, PhD",
+    organization: "Emory University",
+    diseaseArea: "Epilepsy",
+    quote:
+      "We’ve been able to integrate multiple NIH and sponsored trials alongside a large patient registry in Studytrax, creating a seamless bridge between research and clinical care. Automated test scoring, clinic note generation, and delivering personalized results back to patients have fundamentally changed how we use our data.",
+  },
   {
     name: "Harland Winter, MD",
     organization: "Mass General Brigham",
@@ -226,74 +232,169 @@ export default function HomePage() {
       />
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section className="hero-gradient relative min-h-[80vh] flex items-center">
-        {/* Background photo overlay */}
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=75"
-            alt=""
-            fill
-            priority
-            className="object-cover object-center"
-            style={{ opacity: 0.12 }}
-            sizes="100vw"
-          />
-        </div>
+      <section className="hero-gradient relative">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-24 sm:py-32 text-center">
-          <h1
-            className="text-white mb-6 animate-fade-in-up"
-            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}
-          >
-            A database isn&apos;t the finish line,<br className="hidden sm:block" />
-            it&apos;s the{" "}
-            <span
-              className="relative inline-block"
-              style={{
-                background: "linear-gradient(135deg, #60c4f4 0%, #a5e3ff 50%, #60c4f4 100%)",
-                backgroundSize: "200% auto",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                animation: "shimmer 3s linear infinite",
-                lineHeight: 1.3,
-                paddingBottom: "0.1em",
-              }}
-            >
-              Starting Line
-            </span>
-            .
-          </h1>
+            {/* Left: copy + CTA */}
+            <div className="lg:col-span-7 text-center lg:text-left">
+              <h1
+                className="text-white mb-6 animate-fade-in-up"
+                style={{ textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}
+              >
+                Clinical research{" "}
+                <span
+                  className="relative inline-block"
+                  style={{
+                    color: "var(--color-accent-warm)",
+                    lineHeight: 1.3,
+                    paddingBottom: "0.05em",
+                  }}
+                >
+                  Reimagined!
+                </span>
+                {" "}Patients engaged and informed, admin work eliminated, and
+                results delivered faster.
+              </h1>
 
-          <p
-            className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up-delay-1"
-            style={{ color: "rgba(255,255,255,0.82)" }}
-          >
-            Studytrax powers patient registries, clinical trials, and research projects
-            for those looking to put data to work.
-          </p>
+              <p
+                className="text-lg sm:text-xl mb-4 leading-relaxed animate-fade-in-up-delay-1"
+                style={{ color: "rgba(255,255,255,0.85)" }}
+              >
+                Run a single or multi-studies.
+              </p>
 
-          <div className="flex flex-wrap justify-center gap-4 animate-fade-in-up-delay-2">
-            <Link
-              href="/contact"
-              className="btn-primary px-8 py-4 text-sm font-semibold rounded-lg"
-            >
-              Get Started
-            </Link>
+              <ul className="mb-8 inline-block text-left space-y-2 animate-fade-in-up-delay-1 list-none p-0">
+                {["Clinical Trials", "Patient Registries", "Surveys"].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2.5 text-base sm:text-lg"
+                    style={{ color: "rgba(255,255,255,0.92)" }}
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#2ac491"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      className="shrink-0"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-col items-center lg:items-start gap-3 animate-fade-in-up-delay-2">
+                <Link
+                  href="/contact"
+                  className="btn-primary px-8 py-4 text-sm font-semibold rounded-lg"
+                >
+                  Get Started Reimagining
+                </Link>
+                <p
+                  className="text-sm font-semibold inline-flex items-center gap-2"
+                  style={{ color: "rgba(255,255,255,0.85)" }}
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    style={{ color: "var(--color-accent-warm)" }}
+                  >
+                    <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z" />
+                    <polyline points="9 12 11 14 15 10" />
+                  </svg>
+                  100% No Risk Guarantee
+                </p>
+              </div>
+            </div>
+
+            {/* Right: nurse image + tagline + customer logos */}
+            <div className="lg:col-span-5 animate-fade-in-up-delay-2">
+              <div
+                className="relative"
+                style={{
+                  aspectRatio: "4 / 3",
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse 75% 75% at 50% 45%, #000 45%, transparent 100%)",
+                  maskImage:
+                    "radial-gradient(ellipse 75% 75% at 50% 45%, #000 45%, transparent 100%)",
+                }}
+              >
+                <Image
+                  src="/images/nurse.png"
+                  alt="Smiling person looking at a tablet"
+                  fill
+                  priority
+                  className="object-cover"
+                  style={{ objectPosition: "center 35%" }}
+                  sizes="(max-width: 1024px) 100vw, 480px"
+                />
+              </div>
+
+              <div
+                className="mt-5 text-center font-bold leading-tight"
+                style={{ color: "rgba(255,255,255,0.92)" }}
+              >
+                <p className="text-xl sm:text-2xl">
+                  <span style={{ color: "var(--color-accent-warm)" }}>20+</span>{" "}
+                  Years Experience
+                </p>
+                <p className="text-xl sm:text-2xl mt-1">
+                  <span style={{ color: "var(--color-accent-warm)" }}>1000s</span>{" "}
+                  of Trials &amp; Registries
+                </p>
+              </div>
+
+              {/* Customer logo collage */}
+              <div className="mt-5 grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-2.5">
+                {[
+                  { src: "/images/logos/mgb-mclean.png", alt: "Mass General Brigham McLean" },
+                  { src: "/images/logos/mayo.png", alt: "Mayo Clinic" },
+                  { src: "/images/logos/bwh.png", alt: "Brigham and Women's Hospital" },
+                  { src: "/images/logos/tufts.png", alt: "Tufts Medical Center" },
+                  { src: "/images/logos/boston-childrens.png", alt: "Boston Children's Hospital" },
+                  { src: "/images/logos/mgb-childrens.png", alt: "Mass General Brigham Children's" },
+                  { src: "/images/logos/ucsd.png", alt: "University of California, San Diego" },
+                  { src: "/images/logos/utsw.png", alt: "University of Texas Southwestern" },
+                  { src: "/images/logos/cure-hht.png", alt: "Cure HHT" },
+                  { src: "/images/logos/prader-willi.png", alt: "Foundation For Prader-Willi Research" },
+                  { src: "/images/logos/tsc.png", alt: "TSC Alliance" },
+                  { src: "/images/logos/csnk2a1.png", alt: "CSNK2A1 Foundation" },
+                ].map((logo) => (
+                  <div
+                    key={logo.src}
+                    className="rounded-md p-2 flex items-center justify-center"
+                    style={{
+                      backgroundColor: "#ffffff",
+                      minHeight: "60px",
+                    }}
+                  >
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={140}
+                      height={70}
+                      className="h-auto w-auto max-h-[48px] object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
-        </div>
-
-        {/* Scroll cue */}
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float"
-          aria-hidden="true"
-        >
-          <svg width="20" height="28" viewBox="0 0 20 28" fill="none">
-            <rect x="1" y="1" width="18" height="26" rx="9" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-            <rect x="9" y="6" width="2" height="6" rx="1" fill="rgba(255,255,255,0.5)">
-              <animateTransform attributeName="transform" type="translate" values="0,0;0,6;0,0" dur="1.6s" repeatCount="indefinite" />
-            </rect>
-          </svg>
         </div>
       </section>
 
@@ -485,7 +586,69 @@ export default function HomePage() {
       >
         <div className="max-w-6xl mx-auto">
           <h2 className="text-center mb-10" style={{ color: "var(--color-accent)" }}>Trusted by researchers.</h2>
-          <TestimonialCarousel testimonials={testimonials} />
+          <div className="grid md:grid-cols-2 gap-5">
+            {testimonials.map((t) => {
+              const initials = t.name
+                .split(" ")
+                .slice(0, 2)
+                .map((n) => n[0])
+                .join("");
+              return (
+                <div
+                  key={t.name}
+                  className="rounded-lg p-6 sm:p-7 flex flex-col"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: "var(--radius)",
+                    boxShadow: "0 2px 8px rgba(10, 95, 142, 0.04)",
+                  }}
+                >
+                  <div
+                    className="text-4xl leading-none mb-2 select-none font-serif"
+                    style={{ color: "var(--color-accent)", opacity: 0.3 }}
+                    aria-hidden="true"
+                  >
+                    &ldquo;
+                  </div>
+                  <blockquote
+                    className="text-sm sm:text-base leading-relaxed italic mb-5 flex-grow"
+                    style={{ color: "#1a2332" }}
+                  >
+                    {t.quote}
+                  </blockquote>
+                  <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid var(--color-border)" }}>
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+                      style={{ backgroundColor: "var(--color-accent)", color: "#ffffff" }}
+                      aria-hidden="true"
+                    >
+                      {initials}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-semibold text-sm truncate" style={{ color: "#1a2332" }}>
+                        {t.name}
+                      </p>
+                      <p className="text-xs truncate" style={{ color: "var(--color-muted)" }}>
+                        {t.organization}
+                      </p>
+                      {t.diseaseArea && (
+                        <p
+                          className="text-xs mt-1 inline-block px-2 py-0.5 rounded-full font-medium"
+                          style={{
+                            backgroundColor: "rgba(10,95,142,0.08)",
+                            color: "var(--color-accent)",
+                          }}
+                        >
+                          {t.diseaseArea}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -533,7 +696,7 @@ export default function HomePage() {
                   boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
                 }}
               >
-                Get Started
+                Get Started Reimagining
               </Link>
               <Link
                 href="/compare-to-redcap"

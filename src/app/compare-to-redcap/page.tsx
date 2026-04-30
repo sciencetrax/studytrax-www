@@ -184,9 +184,60 @@ export default function CompareToREDCapPage() {
             The more contained your work, the more either option can fit. The more it grows,
             connects, and builds on prior work, the more the choice of platform matters.
           </p>
-          <div className="flex justify-between items-center max-w-3xl mx-auto mt-8 text-base sm:text-xl font-semibold uppercase tracking-wide">
-            <span style={{ color: "#5a6b7f" }}>Leans REDCap</span>
-            <span style={{ color: "#0a5f8e" }}>Leans Studytrax</span>
+          <div className="grid grid-cols-[auto_1fr_auto] gap-3 sm:gap-5 items-center max-w-3xl mx-auto mt-8">
+            {/* Row 1: LEANS labels aligned over LOW/HIGH columns */}
+            <span
+              className="text-base sm:text-xl font-semibold uppercase tracking-wide text-left"
+              style={{ color: "#5a6b7f" }}
+            >
+              Leans REDCap
+            </span>
+            <span aria-hidden="true" />
+            <span
+              className="text-base sm:text-xl font-semibold uppercase tracking-wide text-right"
+              style={{ color: "#0a5f8e" }}
+            >
+              Leans Studytrax
+            </span>
+
+            {/* Row 2: LOW [gradient bar] HIGH */}
+            <span
+              className="text-sm sm:text-base font-semibold uppercase tracking-wide"
+              style={{ color: "#5a6b7f" }}
+            >
+              Low
+            </span>
+            <div
+              className="relative h-2.5 rounded-full"
+              style={{
+                background:
+                  "linear-gradient(to right, #dbe3ec 0%, #c0ccdc 45%, #4a8ab0 75%, #0a5f8e 100%)",
+              }}
+              aria-hidden="true"
+            >
+              <span
+                className="absolute -left-1 top-1/2 -translate-y-1/2 w-0 h-0"
+                style={{
+                  borderTop: "6px solid transparent",
+                  borderBottom: "6px solid transparent",
+                  borderRight: "7px solid #dbe3ec",
+                }}
+              />
+              <span
+                className="absolute -right-1 top-1/2 -translate-y-1/2 w-0 h-0"
+                style={{
+                  borderTop: "6px solid transparent",
+                  borderBottom: "6px solid transparent",
+                  borderLeft: "7px solid #0a5f8e",
+                }}
+              />
+            </div>
+            <span
+              className="text-sm sm:text-base font-semibold uppercase tracking-wide text-center"
+              style={{ color: "#0a5f8e" }}
+            >
+              High
+            </span>
           </div>
         </div>
 
@@ -214,60 +265,46 @@ export default function CompareToREDCapPage() {
                 </div>
                 <div>
                   <h3
-                    className={`text-base sm:text-lg font-semibold ${f.description ? "mb-1" : "mb-3"}`}
+                    className={`text-base sm:text-lg font-semibold text-center ${f.description ? "mb-1" : "mb-3"}`}
                     style={{ color: "#1a2332" }}
                   >
                     {f.label}
                   </h3>
                   {f.description && (
                     <p
-                      className="text-sm leading-snug mb-3"
+                      className="text-sm leading-snug mb-3 text-center"
                       style={{ color: "#5a6b7f" }}
                     >
                       {f.description}
                     </p>
                   )}
 
-                  {/* Scale row */}
-                  <div className="grid grid-cols-[auto_1fr_auto] gap-3 sm:gap-5 items-center">
-                    <p
-                      className="text-sm font-semibold uppercase tracking-wide"
-                      style={{ color: "#5a6b7f" }}
-                    >
-                      Low
-                    </p>
-                    <div
-                      className="relative h-2 rounded-full min-w-[80px]"
+                  {/* Scale bar */}
+                  <div
+                    className="relative h-2 rounded-full"
+                    style={{
+                      background:
+                        "linear-gradient(to right, #dbe3ec 0%, #c0ccdc 45%, #4a8ab0 75%, #0a5f8e 100%)",
+                    }}
+                    aria-hidden="true"
+                  >
+                    {/* Arrowheads at each end */}
+                    <span
+                      className="absolute -left-1 top-1/2 -translate-y-1/2 w-0 h-0"
                       style={{
-                        background:
-                          "linear-gradient(to right, #dbe3ec 0%, #c0ccdc 45%, #4a8ab0 75%, #0a5f8e 100%)",
+                        borderTop: "5px solid transparent",
+                        borderBottom: "5px solid transparent",
+                        borderRight: "6px solid #dbe3ec",
                       }}
-                      aria-hidden="true"
-                    >
-                      {/* Arrowheads at each end */}
-                      <span
-                        className="absolute -left-1 top-1/2 -translate-y-1/2 w-0 h-0"
-                        style={{
-                          borderTop: "5px solid transparent",
-                          borderBottom: "5px solid transparent",
-                          borderRight: "6px solid #dbe3ec",
-                        }}
-                      />
-                      <span
-                        className="absolute -right-1 top-1/2 -translate-y-1/2 w-0 h-0"
-                        style={{
-                          borderTop: "5px solid transparent",
-                          borderBottom: "5px solid transparent",
-                          borderLeft: "6px solid #0a5f8e",
-                        }}
-                      />
-                    </div>
-                    <p
-                      className="text-sm font-semibold uppercase tracking-wide"
-                      style={{ color: "#0a5f8e" }}
-                    >
-                      High
-                    </p>
+                    />
+                    <span
+                      className="absolute -right-1 top-1/2 -translate-y-1/2 w-0 h-0"
+                      style={{
+                        borderTop: "5px solid transparent",
+                        borderBottom: "5px solid transparent",
+                        borderLeft: "6px solid #0a5f8e",
+                      }}
+                    />
                   </div>
                 </div>
               </li>
