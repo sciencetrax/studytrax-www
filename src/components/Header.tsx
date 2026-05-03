@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
   { href: "/workbench", label: "Workbench" },
   { href: "/for-grant-writers", label: "For Grant Writers" },
   { href: "/compare-to-redcap", label: "Compare to REDCap" },

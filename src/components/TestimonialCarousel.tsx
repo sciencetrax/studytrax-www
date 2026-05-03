@@ -8,6 +8,7 @@ export interface Testimonial {
   organization: string;
   diseaseArea?: string;
   designs?: string;
+  headshot?: string;
 }
 
 interface TestimonialCarouselProps {
