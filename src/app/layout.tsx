@@ -51,13 +51,13 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {GA_ID && (
+          <>
+            <GoogleAnalytics gaId={GA_ID} />
+            <AnalyticsPageView gaId={GA_ID} />
+          </>
+        )}
       </body>
-      {GA_ID && (
-        <>
-          <GoogleAnalytics gaId={GA_ID} />
-          <AnalyticsPageView gaId={GA_ID} />
-        </>
-      )}
     </html>
   );
 }
