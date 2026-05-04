@@ -416,7 +416,7 @@ export default function HomePage() {
               {/* Customer logo collage */}
               <div className="mt-5 grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-2.5">
                 {[
-                  { src: "/images/logos/mgb-mclean.png", alt: "Mass General Brigham McLean" },
+                  { src: "/images/logos/mass-general.png", alt: "Mass General" },
                   { src: "/images/logos/mayo.png", alt: "Mayo Clinic" },
                   { src: "/images/logos/bwh.png", alt: "Brigham and Women's Hospital" },
                   { src: "/images/logos/tufts.png", alt: "Tufts Medical Center" },
