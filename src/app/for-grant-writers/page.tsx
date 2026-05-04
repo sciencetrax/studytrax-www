@@ -53,8 +53,92 @@ export default function ForGrantWritersPage() {
         </div>
       </section>
 
+      {/* Scoring table */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-4">
+        <h2 className="text-xl font-semibold mb-3">How Studytrax strengthens your score</h2>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-muted)" }}>
+          Here&apos;s how Studytrax maps directly to what reviewers score, and what sets proposals apart.
+        </p>
+        <div className="overflow-x-auto">
+          <table
+            className="w-full text-sm border-collapse"
+            style={{ borderRadius: "var(--radius)" }}
+          >
+            <thead>
+              <tr style={{ backgroundColor: "var(--color-accent)", color: "#fff" }}>
+                <th className="text-left px-4 py-3 font-semibold">Scoring Area</th>
+                <th className="text-left px-4 py-3 font-semibold">What reviewers often see</th>
+                <th className="text-left px-4 py-3 font-semibold">With Studytrax</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {
+                  area: "Innovation",
+                  reviewers: "Standard data capture with limited differentiation",
+                  studytrax: "Active participant engagement (portal, messaging, education, incentives), automated workflows, device integration, and real-time interaction built into the study",
+                },
+                {
+                  area: "Approach",
+                  reviewers: "General descriptions of data collection and analysis",
+                  studytrax: "Clearly defined, executable workflows with event triggers, longitudinal tracking, automated processes, and integrated analysis tools",
+                },
+                {
+                  area: "Data Management & Sharing (DMS)",
+                  reviewers: "A plan describing what will happen after data collection",
+                  studytrax: "A system where data is already organized, structured, and connected to analysis and outputs from day one",
+                },
+                {
+                  area: "Dissemination",
+                  reviewers: "Intent to publish, often disconnected from infrastructure",
+                  studytrax: "Built-in Workbench linking live data to publication-ready tables, reports, and manuscripts, ready to generate outputs immediately",
+                },
+                {
+                  area: "Collaboration",
+                  reviewers: "“The team will collaborate” without clear structure",
+                  studytrax: "Role-based access to shared workspaces, datasets, tables, and outputs, collaboration that is immediate, controlled, and audit-ready",
+                },
+                {
+                  area: "Feasibility / Execution",
+                  reviewers: "Strong ideas with unclear path to implementation",
+                  studytrax: "A unified platform where data capture, workflows, analysis, reporting, and dissemination are already integrated and operational",
+                },
+                {
+                  area: "Data Quality & Retention",
+                  reviewers: "Risk of missing data and participant drop-off",
+                  studytrax: "Engaged participants, automated reminders, dynamic workflows, and real-time validation improve completeness and data quality",
+                },
+                {
+                  area: "Efficiency / Timeline",
+                  reviewers: "Manual processes, multiple tools, and delayed outputs",
+                  studytrax: "Automated workflows, reusable templates, and integrated reporting reduce manual effort and accelerate time to analysis and publication",
+                },
+              ].map((row, i) => (
+                <tr
+                  key={row.area}
+                  style={{
+                    backgroundColor: i % 2 === 0 ? "var(--color-surface)" : "#fff",
+                    borderBottom: "1px solid var(--color-border)",
+                  }}
+                >
+                  <td className="px-4 py-3 font-semibold align-top" style={{ color: "var(--color-accent)", minWidth: "140px" }}>
+                    {row.area}
+                  </td>
+                  <td className="px-4 py-3 align-top" style={{ color: "var(--color-muted)" }}>
+                    {row.reviewers}
+                  </td>
+                  <td className="px-4 py-3 align-top" style={{ color: "var(--color-text)" }}>
+                    {row.studytrax}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       {/* Feature blocks */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-16">
         <div className="grid sm:grid-cols-2 gap-6">
 
           {/* Block 1 */}
@@ -191,90 +275,6 @@ export default function ForGrantWritersPage() {
           </div>
 
 
-        </div>
-      </section>
-
-      {/* Scoring table */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-        <h2 className="text-xl font-semibold mb-3">How Studytrax strengthens your score</h2>
-        <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-muted)" }}>
-          Here&apos;s how Studytrax maps directly to what reviewers score, and what sets proposals apart.
-        </p>
-        <div className="overflow-x-auto">
-          <table
-            className="w-full text-sm border-collapse"
-            style={{ borderRadius: "var(--radius)" }}
-          >
-            <thead>
-              <tr style={{ backgroundColor: "var(--color-accent)", color: "#fff" }}>
-                <th className="text-left px-4 py-3 font-semibold">Scoring Area</th>
-                <th className="text-left px-4 py-3 font-semibold">What reviewers often see</th>
-                <th className="text-left px-4 py-3 font-semibold">With Studytrax</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                {
-                  area: "Innovation",
-                  reviewers: "Standard data capture with limited differentiation",
-                  studytrax: "Active participant engagement (portal, messaging, education, incentives), automated workflows, device integration, and real-time interaction built into the study",
-                },
-                {
-                  area: "Approach",
-                  reviewers: "General descriptions of data collection and analysis",
-                  studytrax: "Clearly defined, executable workflows with event triggers, longitudinal tracking, automated processes, and integrated analysis tools",
-                },
-                {
-                  area: "Data Management & Sharing (DMS)",
-                  reviewers: "A plan describing what will happen after data collection",
-                  studytrax: "A system where data is already organized, structured, and connected to analysis and outputs from day one",
-                },
-                {
-                  area: "Dissemination",
-                  reviewers: "Intent to publish, often disconnected from infrastructure",
-                  studytrax: "Built-in Workbench linking live data to publication-ready tables, reports, and manuscripts, ready to generate outputs immediately",
-                },
-                {
-                  area: "Collaboration",
-                  reviewers: "\u201CThe team will collaborate\u201D without clear structure",
-                  studytrax: "Role-based access to shared workspaces, datasets, tables, and outputs, collaboration that is immediate, controlled, and audit-ready",
-                },
-                {
-                  area: "Feasibility / Execution",
-                  reviewers: "Strong ideas with unclear path to implementation",
-                  studytrax: "A unified platform where data capture, workflows, analysis, reporting, and dissemination are already integrated and operational",
-                },
-                {
-                  area: "Data Quality & Retention",
-                  reviewers: "Risk of missing data and participant drop-off",
-                  studytrax: "Engaged participants, automated reminders, dynamic workflows, and real-time validation improve completeness and data quality",
-                },
-                {
-                  area: "Efficiency / Timeline",
-                  reviewers: "Manual processes, multiple tools, and delayed outputs",
-                  studytrax: "Automated workflows, reusable templates, and integrated reporting reduce manual effort and accelerate time to analysis and publication",
-                },
-              ].map((row, i) => (
-                <tr
-                  key={row.area}
-                  style={{
-                    backgroundColor: i % 2 === 0 ? "var(--color-surface)" : "#fff",
-                    borderBottom: "1px solid var(--color-border)",
-                  }}
-                >
-                  <td className="px-4 py-3 font-semibold align-top" style={{ color: "var(--color-accent)", minWidth: "140px" }}>
-                    {row.area}
-                  </td>
-                  <td className="px-4 py-3 align-top" style={{ color: "var(--color-muted)" }}>
-                    {row.reviewers}
-                  </td>
-                  <td className="px-4 py-3 align-top" style={{ color: "var(--color-text)" }}>
-                    {row.studytrax}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </section>
 

@@ -78,6 +78,9 @@ const roles = [
     screenshot: "/images/screenshots/investigator-table.png",
     screenshotAlt: "Studytrax investigator data table view",
     screenshotCaption: "Investigator data table",
+    screenshot2: "/images/screenshots/investigator-biosketch-v2.png",
+    screenshot2Alt: "Studytrax investigator biosketch view",
+    screenshot2Caption: "Biosketch integration",
   },
   {
     title: "Coordinators & Staff",
@@ -99,6 +102,9 @@ const roles = [
     screenshot: "/images/screenshots/coordinator-dashboard.png",
     screenshotAlt: "Studytrax coordinator dashboard",
     screenshotCaption: "Coordinator dashboard",
+    screenshot2: "/images/screenshots/coordinator-todo-lists.png",
+    screenshot2Alt: "Studytrax coordinator to-do lists",
+    screenshot2Caption: "To-do lists",
   },
   {
     title: "Participants",
@@ -120,6 +126,9 @@ const roles = [
     screenshot: "/images/screenshots/participant-report.png",
     screenshotAlt: "Studytrax participant clinical report",
     screenshotCaption: "Participant clinical report",
+    screenshot2: "/images/screenshots/participant-activity.png",
+    screenshot2Alt: "Studytrax participant activity view",
+    screenshot2Caption: "Participant activity",
   },
 ];
 
@@ -335,7 +344,7 @@ export default function HomePage() {
               <div className="flex flex-col items-center lg:items-start gap-3 animate-fade-in-up-delay-2">
                 <Link
                   href="/contact"
-                  className="btn-primary px-8 py-4 text-sm font-semibold rounded-lg"
+                  className="btn-primary px-12 py-5 text-base sm:text-lg font-semibold rounded-lg"
                 >
                   Start your 5-Minute Fit Check
                 </Link>
@@ -384,9 +393,13 @@ export default function HomePage() {
                 style={{
                   aspectRatio: "4 / 3",
                   WebkitMaskImage:
-                    "radial-gradient(ellipse 75% 75% at 50% 45%, #000 45%, transparent 100%)",
+                    "radial-gradient(ellipse 70% 70% at 50% 50%, #000 55%, transparent 100%)",
+                  WebkitMaskRepeat: "no-repeat",
+                  WebkitMaskSize: "100% 100%",
                   maskImage:
-                    "radial-gradient(ellipse 75% 75% at 50% 45%, #000 45%, transparent 100%)",
+                    "radial-gradient(ellipse 70% 70% at 50% 50%, #000 55%, transparent 100%)",
+                  maskRepeat: "no-repeat",
+                  maskSize: "100% 100%",
                 }}
               >
                 <Image
@@ -410,7 +423,7 @@ export default function HomePage() {
                   { src: "/images/logos/boston-childrens.png", alt: "Boston Children's Hospital" },
                   { src: "/images/logos/mgb-childrens.png", alt: "Mass General Brigham Children's" },
                   { src: "/images/logos/ucsd.png", alt: "University of California, San Diego" },
-                  { src: "/images/logos/utsw.png", alt: "University of Texas Southwestern" },
+                  { src: "/images/logos/emory.png", alt: "Emory University" },
                   { src: "/images/logos/cure-hht.png", alt: "Cure HHT" },
                   { src: "/images/logos/prader-willi.png", alt: "Foundation For Prader-Willi Research" },
                   { src: "/images/logos/tsc.png", alt: "TSC Alliance" },
@@ -585,7 +598,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-center mb-10" style={{ color: "var(--color-accent)" }}>Engage participants and increase your team&apos;s productivity.</h2>
           <div className="grid sm:grid-cols-3 gap-6">
-            {roles.map(({ title, body, headline, bullets, Icon, badgeBg, badgeColor, borderAccent, image, imageAlt, imagePosition, screenshot, screenshotAlt, screenshotCaption }) => (
+            {roles.map(({ title, body, headline, bullets, Icon, badgeBg, badgeColor, borderAccent, image, imageAlt, imagePosition, screenshot, screenshotAlt, screenshotCaption, screenshot2, screenshot2Alt, screenshot2Caption }) => (
               <div
                 key={title}
                 className="role-card overflow-hidden flex flex-col"
@@ -633,13 +646,28 @@ export default function HomePage() {
                       {body}
                     </p>
                   )}
-                  {/* Screenshot (click to enlarge) */}
+                  {/* Screenshot(s) — click to enlarge */}
                   <div className="mt-auto">
-                    <ImageLightbox
-                      src={screenshot}
-                      alt={screenshotAlt}
-                      caption={screenshotCaption}
-                    />
+                    {screenshot2 ? (
+                      <div className="flex flex-col gap-2">
+                        <ImageLightbox
+                          src={screenshot}
+                          alt={screenshotAlt}
+                          caption={screenshotCaption}
+                        />
+                        <ImageLightbox
+                          src={screenshot2}
+                          alt={screenshot2Alt ?? ""}
+                          caption={screenshot2Caption}
+                        />
+                      </div>
+                    ) : (
+                      <ImageLightbox
+                        src={screenshot}
+                        alt={screenshotAlt}
+                        caption={screenshotCaption}
+                      />
+                    )}
                     <p className="text-xs mt-2 text-center" style={{ color: "var(--color-muted)" }}>
                       Click to enlarge
                     </p>
@@ -667,7 +695,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center gap-3 mb-12">
             <Link
               href="/contact"
-              className="btn-primary px-8 py-3.5 rounded-lg text-sm font-semibold"
+              className="btn-primary px-12 py-5 rounded-lg text-base sm:text-lg font-semibold"
             >
               Start your 5-Minute Fit Check
             </Link>
@@ -879,7 +907,7 @@ export default function HomePage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="btn-primary px-10 py-4 rounded-lg text-sm font-semibold"
+                className="btn-primary px-12 py-5 rounded-lg text-base sm:text-lg font-semibold"
                 style={{
                   background: "#fff",
                   color: "var(--color-accent)",

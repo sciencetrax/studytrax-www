@@ -14,6 +14,8 @@ interface ImageLightboxProps {
   fullWidth?: number;
   fullHeight?: number;
   className?: string;
+  /** When true, render the thumbnail at its natural aspect ratio (no cropping). Default: false (16:10 fixed aspect, object-cover). */
+  preserveAspectRatio?: boolean;
 }
 
 export default function ImageLightbox({
@@ -25,6 +27,7 @@ export default function ImageLightbox({
   fullWidth = 1600,
   fullHeight = 1000,
   className = "",
+  preserveAspectRatio = false,
 }: ImageLightboxProps) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -51,25 +54,48 @@ export default function ImageLightbox({
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label={`View larger: ${alt}`}
-        className={`group relative block w-full overflow-hidden rounded-md cursor-zoom-in transition-transform hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`}
-        style={{
-          border: "1px solid var(--color-border)",
-          backgroundColor: "var(--color-surface)",
-          aspectRatio: "16 / 10",
-        }}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover object-top"
-          sizes="(max-width: 768px) 100vw, 33vw"
-        />
-      </button>
+      {preserveAspectRatio ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label={`View larger: ${alt}`}
+          className={`group block w-full overflow-hidden rounded-md cursor-zoom-in transition-transform hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`}
+          style={{
+            border: "1px solid var(--color-border)",
+            backgroundColor: "var(--color-surface)",
+            padding: 0,
+          }}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            width={thumbnailWidth}
+            height={thumbnailHeight}
+            className="block w-full h-auto"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label={`View larger: ${alt}`}
+          className={`group relative block w-full overflow-hidden rounded-md cursor-zoom-in transition-transform hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className}`}
+          style={{
+            border: "1px solid var(--color-border)",
+            backgroundColor: "var(--color-surface)",
+            aspectRatio: "16 / 10",
+          }}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover object-top"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </button>
+      )}
 
       {open && mounted && createPortal(
         <div

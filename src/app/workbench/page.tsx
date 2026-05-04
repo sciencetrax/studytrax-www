@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ImageLightbox from "@/components/ImageLightbox";
 
 export const metadata: Metadata = {
   title: "Workbench | Publication Workflow for Clinical Research",
@@ -48,8 +49,29 @@ export default function WorkbenchPage() {
         </div>
       </section>
 
+      {/* Workbench screenshots — click to enlarge */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-2 pb-2">
+        <div className="grid md:grid-cols-2 gap-5 items-start">
+          <ImageLightbox
+            src="/images/screenshots/investigator-biosketch-v2.png"
+            alt="Studytrax biosketch and academic output view"
+            caption="Biosketch and academic output"
+            preserveAspectRatio
+          />
+          <ImageLightbox
+            src="/images/screenshots/workbench-functions.png"
+            alt="Studytrax Workbench functions overview"
+            caption="Workbench functions"
+            preserveAspectRatio
+          />
+        </div>
+        <p className="text-xs mt-2 text-center" style={{ color: "var(--color-muted)" }}>
+          Click to enlarge
+        </p>
+      </section>
+
       {/* Feature blocks */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-12">
         <div className="grid sm:grid-cols-2 gap-6">
 
           {/* Block 1 */}
