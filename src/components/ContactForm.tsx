@@ -3,15 +3,9 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const roles = [
-  "PI",
-  "Research Administrator",
-  "Study Coordinator",
-  "Department Chair",
-  "Other",
-];
-
 const topics = [
+  "5-Minute Fit Check",
+  "Quote Request",
   "Grant Support",
   "Demo",
   "General Inquiry",
@@ -156,61 +150,6 @@ export default function ContactForm() {
           }}
           placeholder="(555) 555-5555"
         />
-      </div>
-
-      <div>
-        <label
-          htmlFor="contact-institution"
-          className="block text-sm font-medium mb-1"
-          style={{ color: "var(--color-text)" }}
-        >
-          Institution
-        </label>
-        <input
-          id="contact-institution"
-          name="institution"
-          type="text"
-          autoComplete="organization"
-          className="w-full px-4 py-2.5 rounded border text-sm transition-colors"
-          style={{
-            borderColor: "var(--color-border)",
-            borderRadius: "var(--radius)",
-            color: "var(--color-text)",
-            backgroundColor: "#fff",
-          }}
-          placeholder="University or organization"
-        />
-      </div>
-
-      <div>
-        <label
-          htmlFor="contact-role"
-          className="block text-sm font-medium mb-1"
-          style={{ color: "var(--color-text)" }}
-        >
-          Role
-        </label>
-        <select
-          id="contact-role"
-          name="role"
-          className="w-full px-4 py-2.5 rounded border text-sm transition-colors appearance-none"
-          style={{
-            borderColor: "var(--color-border)",
-            borderRadius: "var(--radius)",
-            color: "var(--color-text)",
-            backgroundColor: "#fff",
-          }}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Select your role
-          </option>
-          {roles.map((r) => (
-            <option key={r} value={r}>
-              {r}
-            </option>
-          ))}
-        </select>
       </div>
 
       <div>

@@ -50,17 +50,29 @@ export default function Footer() {
                 { href: "/for-grant-writers", label: "For Grant Writers" },
                 { href: "/compare-to-redcap", label: "Compare to REDCap" },
                 { href: "/compliance-trust", label: "Compliance & Trust" },
-                { href: "/support", label: "Support" },
+                { href: "https://support.sciencetrax.com/hc/en-us/requests/new", label: "Support", external: true },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="transition-colors hover:underline"
-                    style={{ color: "var(--color-muted)" }}
-                  >
-                    {link.label}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors hover:underline"
+                      style={{ color: "var(--color-muted)" }}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="transition-colors hover:underline"
+                      style={{ color: "var(--color-muted)" }}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

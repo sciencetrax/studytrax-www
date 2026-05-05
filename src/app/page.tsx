@@ -4,7 +4,7 @@ import Link from "next/link";
 import { type Testimonial } from "@/components/TestimonialCarousel";
 import ProofPoints from "@/components/ProofPoints";
 import ImageLightbox from "@/components/ImageLightbox";
-import { Users, FlaskConical, BarChart3, ClipboardList, UserCheck, Zap, PlayCircle } from "lucide-react";
+import { Users, FlaskConical, BarChart3, ClipboardList, UserCheck, Zap, PlayCircle, Calendar } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Studytrax | EDC for Academic Research & Disease Organizations",
@@ -344,9 +344,11 @@ export default function HomePage() {
               <div className="flex flex-col items-center lg:items-start gap-3 animate-fade-in-up-delay-2">
                 <Link
                   href="/contact"
-                  className="btn-primary px-12 py-5 text-base sm:text-lg font-semibold rounded-lg"
+                  className="btn-primary px-12 py-5 text-base sm:text-lg font-semibold rounded-lg whitespace-nowrap"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.625rem" }}
                 >
-                  Start your 5-Minute Fit Check
+                  <Calendar size={20} aria-hidden="true" className="shrink-0" />
+                  <span>Book a 5-minute Fit Check Conversation</span>
                 </Link>
                 <p
                   className="text-sm font-semibold inline-flex items-center gap-2"
@@ -695,9 +697,11 @@ export default function HomePage() {
           <div className="flex flex-col items-center gap-3 mb-12">
             <Link
               href="/contact"
-              className="btn-primary px-12 py-5 rounded-lg text-base sm:text-lg font-semibold"
+              className="btn-primary px-12 py-5 rounded-lg text-base sm:text-lg font-semibold whitespace-nowrap"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.625rem" }}
             >
-              Start your 5-Minute Fit Check
+              <Calendar size={20} aria-hidden="true" className="shrink-0" />
+              <span>Book a 5-minute Fit Check Conversation</span>
             </Link>
             <p
               className="text-sm font-semibold inline-flex items-center gap-2"
@@ -904,18 +908,43 @@ export default function HomePage() {
             <p className="mb-10 text-base sm:text-lg" style={{ color: "rgba(255,255,255,0.78)" }}>
               Five minutes and a conversation about your study is all it takes.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col items-center gap-3">
               <Link
                 href="/contact"
-                className="btn-primary px-12 py-5 rounded-lg text-base sm:text-lg font-semibold"
+                className="btn-primary px-12 py-5 rounded-lg text-base sm:text-lg font-semibold whitespace-nowrap"
                 style={{
                   background: "#fff",
                   color: "var(--color-accent)",
                   boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.625rem",
                 }}
               >
-                Start your 5-Minute Fit Check
+                <Calendar size={20} aria-hidden="true" className="shrink-0" />
+                <span>Book a 5-minute Fit Check Conversation</span>
               </Link>
+              <p
+                className="text-sm font-semibold inline-flex items-center gap-2"
+                style={{ color: "rgba(255,255,255,0.85)" }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  style={{ color: "var(--color-accent-warm)" }}
+                >
+                  <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z" />
+                  <polyline points="9 12 11 14 15 10" />
+                </svg>
+                100% No Risk Guarantee
+              </p>
             </div>
           </div>
         </div>

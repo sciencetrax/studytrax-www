@@ -4,14 +4,12 @@ import ImageLightbox from "@/components/ImageLightbox";
 import {
   Users,
   Zap,
-  Activity,
   FileText,
-  Network,
   HeartPulse,
   Layout as LayoutIcon,
-  BarChart3,
   TrendingUp,
   Calendar,
+  PlayCircle,
   type LucideIcon,
 } from "lucide-react";
 
@@ -30,105 +28,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.studytrax.com/compare-to-redcap" },
 };
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Does the data entry experience motivate participants to stay enrolled?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Studytrax engages participants beyond data entry with communication, incentives, education, and feedback built in. Engaged participants complete more visits, return more surveys, and stay enrolled longer.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How much time do staff spend on documentation and administrative activities instead of research?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Studytrax automates reporting, documentation, follow-up, and coordination through event triggers, scheduled notifications, and rule-based actions, reducing the manual work that consumes coordinator time.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What would make investigators log in more often?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Investigators see real-time data they can use directly for reporting, decision support, and clinical practice, so the system becomes part of their daily workflow rather than a back-office tool.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How simple is it to extract and analyze data, and build manuscript tables?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "The Workbench connects live study data directly to datasets, tables, and reports, so the path from collected data to a submitted manuscript is shorter and repeatable, without disconnected tools.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How much work can you reuse and automate across publications and studies?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Studytrax is a multi-study, connected environment where datasets, transformations, tables, reports, and configurations carry forward, giving each new study or publication a head start.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What happens when a platform limitation is hit and your team needs something the system cannot do?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Studytrax provides hands-on support and a flexible configuration model, so workflows, forms, integrations, and clinical use cases can be tailored to fit how your team actually works.",
-      },
-    },
-  ],
-};
-
-interface ExecutionBlock {
-  heading: string;
-  body: string | null;
-  Icon: LucideIcon;
-}
-
-const executionBlocks: ExecutionBlock[] = [
-  {
-    heading: "Participant engagement that leads to better data",
-    body: "Participants aren't just entering data. They're part of the system, with communication, incentives, education, and feedback built in. An engaged participant completes more visits, returns more surveys, and stays enrolled longer.",
-    Icon: Users,
-  },
-  {
-    heading: "Automated workflows that replace manual work",
-    body: "Reporting, documentation, follow-up, and coordination happen automatically based on real-time data. Event triggers, scheduled notifications, and rule-based actions reduce the work that consumes coordinators and keeps investigators waiting.",
-    Icon: Zap,
-  },
-  {
-    heading: "Real-time data use that creates immediate value",
-    body: "Data is available for reporting, decision support, and clinical use without exporting or rebuilding it elsewhere. Investigators and staff see what they need when they need it, not weeks later after a data pull.",
-    Icon: Activity,
-  },
-  {
-    heading: "Integrated analysis that accelerates publication",
-    body: null, // rendered with inline link below
-    Icon: FileText,
-  },
-  {
-    heading: "A connected environment, not siloed projects",
-    body: "All research projects and registries live within a single environment. Data can be shared across studies as needed, forms and configurations carry forward, and nothing is locked inside a standalone project. The result is a connected research program, not a collection of disconnected databases.",
-    Icon: Network,
-  },
-  {
-    heading: "Clinical integration that extends beyond research",
-    body: "Use the same system to support clinical workflows, generate visit summaries, score assessments, and deliver insights at the point of care. Studytrax has supported clinical integration for years, bridging research data and clinical practice in a single platform.",
-    Icon: HeartPulse,
-  },
-];
-
 const rowIcons: Record<string, LucideIcon> = {
   "Core model": LayoutIcon,
   "Participant experience": Users,
   "Workflows": Zap,
-  "Data use": BarChart3,
   "Analysis and publication": FileText,
   "Clinical integration": HeartPulse,
   "Scalability": TrendingUp,
@@ -153,10 +56,10 @@ const comparisonRows: ComparisonRow[] = [
   {
     area: "Participant experience",
     redcap:
-      "Participants complete forms. The interface is functional but not designed to keep them engaged or informed between visits.",
+      "Participants complete forms.",
     studytraxFirst:
-      "Participants interact with a portal that includes messaging, rewards, education, and feedback.",
-    studytraxRest: "Engagement is built into the system, not bolted on. You choose what’s best to use.",
+      "The participant portal can include interactive forms, messaging, rewards, education, and health insights.",
+    studytraxRest: "Engagement is built in, not bolted on.",
   },
   {
     area: "Workflows",
@@ -167,20 +70,13 @@ const comparisonRows: ComparisonRow[] = [
     studytraxRest: "",
   },
   {
-    area: "Data use",
-    redcap:
-      "Data is exported for analysis in external tools. Real-time reporting and decision support require additional infrastructure.",
-    studytraxFirst:
-      "Data is available for reporting, decision support, and clinical use in real time, without exporting or rebuilding in another system.",
-    studytraxRest: "",
-  },
-  {
     area: "Analysis and publication",
     redcap:
-      "Analysis and publication workflows happen outside the platform. Tables, datasets, and manuscripts are built in disconnected tools.",
+      "Data is exported for analysis in external tools. Real-time reporting, decision support, tables, datasets, and manuscripts all happen outside the platform in disconnected tools.",
     studytraxFirst:
-      "The Workbench connects live study data to datasets, publication-ready tables, and organized academic output, all within the platform.",
-    studytraxRest: "",
+      "Live study data flows directly into reporting, decision support, datasets, publication-ready tables, and organized academic output, all within the platform.",
+    studytraxRest:
+      "No exporting, no rebuilding in another system, available in real time.",
   },
   {
     area: "Clinical integration",
@@ -200,66 +96,98 @@ const comparisonRows: ComparisonRow[] = [
   },
 ];
 
-const questions = [
-  "Does the data entry experience motivate participants to stay enrolled?",
-  "How much time do staff spend on documentation and administrative activities instead of research?",
-  "What would make investigators log in more often?",
-  "How simple is it to extract and analyze data, and build manuscript tables?",
-  "How much work can you reuse and automate across publications and studies?",
-  "What happens when a platform limitation is hit and your team needs something the system cannot do?",
-];
-
 export default function CompareToREDCapPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       {/* ── Hero ────────────────────────────────────────────────── */}
       <section
-        className="pt-8 pb-12 sm:pt-10 sm:pb-16 px-4 sm:px-6"
+        className="pt-8 pb-4 sm:pt-10 sm:pb-6 px-4 sm:px-6"
         style={{ backgroundColor: "var(--color-surface)" }}
       >
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="mb-6">Comparing Studytrax to REDCap?</h1>
+          <h1 className="mb-6">Using REDCap. Why Switch?</h1>
+          <ul className="inline-block text-left space-y-4 list-none p-0 mb-8">
+            {["Save Time", "Engage Participants", "Accelerate Results"].map((item) => (
+              <li
+                key={item}
+                className="flex items-center gap-4 text-2xl sm:text-3xl font-semibold"
+                style={{ color: "var(--color-text)" }}
+              >
+                <svg
+                  width="36"
+                  height="36"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#2ac491"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="shrink-0"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
           <p
             className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
             style={{ color: "var(--color-text)" }}
           >
-            The main difference is what the systems are designed to do. Most platforms are
-            designed to capture and store data. Studytrax is built to engage participants,
-            automate workflows, and deliver results fast, in research and in clinical practice.
+            <strong>Studytrax</strong> and <strong>REDCap</strong> are the only two electronic
+            data capture (EDC) systems designed for academic research and disease organizations,
+            rather than the pharmaceutical industry. Despite the shared audience, Studytrax and
+            REDCap have distinctly different development aims and feature sets.
           </p>
         </div>
       </section>
 
-      {/* ── Section 1 — Clinical research has changed ─────────────── */}
-      <section className="pt-8 pb-6 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="mb-5">Clinical research has changed, and so have the requirements.</h2>
-            <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--color-muted)" }}>
-              The goal is no longer just collecting data. Teams are expected to minimize dropouts
-              and maximize complete datasets, reduce administrative burden across staff, turn data
-              into results faster, and use data in real time to inform care and decisions. That
-              requires more than a database.
-            </p>
+      {/* ── Video Overview ──────────────────────────────────────── */}
+      <section
+        className="pt-1 pb-6 sm:pt-2 sm:pb-8 px-4 sm:px-6"
+        style={{ backgroundColor: "var(--color-surface)" }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div
+              className="shrink-0 flex items-center justify-center"
+              style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "12px",
+                background: "linear-gradient(135deg, rgba(10,95,142,0.1), rgba(26,128,186,0.06))",
+                color: "var(--color-accent)",
+              }}
+            >
+              <PlayCircle size={24} />
+            </div>
+            <h2 style={{ color: "var(--color-accent)" }}>Overview of Studytrax</h2>
+          </div>
+          <div
+            className="relative w-full rounded-lg overflow-hidden"
+            style={{
+              paddingBottom: "56.25%",
+              border: "1px solid var(--color-border)",
+              borderRadius: "var(--radius)",
+              boxShadow: "0 8px 32px rgba(10, 95, 142, 0.1)",
+            }}
+          >
+            <iframe
+              src="https://player.vimeo.com/video/494894766?h=&title=0&byline=0&portrait=0&loop=1"
+              className="absolute inset-0 w-full h-full"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title="Studytrax platform overview"
+              style={{ border: "none" }}
+            />
           </div>
         </div>
       </section>
 
       {/* ── Section 3 — Key differences (table) ──────────────────── */}
       <section className="pt-4 pb-8 px-4 sm:px-6">
-        <div
-          className="max-w-6xl mx-auto rounded-lg pt-4 pb-6 px-6 sm:pt-5 sm:pb-8 sm:px-10"
-          style={{
-            backgroundColor: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "var(--radius)",
-          }}
-        >
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-center mb-5">Key differences.</h2>
 
           {/* Desktop / tablet table (>= 640px) */}
@@ -272,13 +200,13 @@ export default function CompareToREDCapPage() {
               </colgroup>
               <thead>
                 <tr style={{ borderBottom: "2px solid var(--color-border)" }}>
-                  <th className="text-left font-bold" style={{ color: "var(--color-accent)", padding: "16px" }}>
+                  <th className="text-left font-bold text-lg" style={{ color: "var(--color-accent)", padding: "16px" }}>
                     Area
                   </th>
-                  <th className="text-left font-bold" style={{ color: "var(--color-accent)", padding: "16px" }}>
+                  <th className="text-left font-bold text-lg" style={{ color: "var(--color-accent)", padding: "16px" }}>
                     REDCap
                   </th>
-                  <th className="text-left font-bold" style={{ color: "var(--color-accent)", padding: "16px" }}>
+                  <th className="text-left font-bold text-lg" style={{ color: "var(--color-accent)", padding: "16px" }}>
                     Studytrax
                   </th>
                 </tr>
@@ -388,95 +316,71 @@ export default function CompareToREDCapPage() {
         </div>
       </section>
 
-      {/* ── Section 2 — Built for execution ──────────────────────── */}
-      <section className="pt-2 pb-12 px-4 sm:px-6">
+      {/* ── Section 4a — Where REDCap stops ──────────────────────── */}
+      <section className="pt-2 pb-16 px-4 sm:px-6" style={{ backgroundColor: "var(--color-surface)" }}>
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-center mb-10">Studytrax is built for execution, not just storage.</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            {executionBlocks.map((b) => {
-              const Icon = b.Icon;
-              return (
+          <h2 className="text-center mb-10" style={{ color: "var(--color-accent)" }}>
+            Where REDCap Stops
+          </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              {
+                title: "Limited Clinical Use",
+                body: "Real-time clinical use of data is impractical, requiring workarounds or separate systems.",
+              },
+              {
+                title: "Inflexible Features",
+                body: "Features don't match real-world workflows, with limited options for triggers, branching, or rules.",
+              },
+              {
+                title: "Siloed Data",
+                body: "Each project is a standalone database. Data isn't shared across studies, requiring duplicate entry.",
+              },
+              {
+                title: "Delayed Changes",
+                body: "Mid-study form modifications are technically involved, slow to deploy, and risk data loss.",
+              },
+              {
+                title: "No Path To Publication",
+                body: "No tools to organize datasets, build manuscript tables, or connect outputs back to studies.",
+              },
+              {
+                title: "Limited Form Design",
+                body: "Forms are flat one-row-per-variable layouts, with no multimedia, body diagrams, or mobile-responsive options.",
+              },
+            ].map((p) => (
+              <div
+                key={p.title}
+                className="rounded-lg p-6 flex flex-col"
+                style={{
+                  backgroundColor: "#ffffff",
+                  border: "1px solid var(--color-border)",
+                  borderTop: "3px solid var(--color-accent-warm)",
+                  borderRadius: "var(--radius)",
+                }}
+              >
                 <div
-                  key={b.heading}
-                  className="rounded-lg p-6"
+                  className="mb-3 w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{
-                    backgroundColor: "var(--color-surface)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: "var(--radius)",
-                  }}
-                >
-                  <div
-                    className="mb-4 w-11 h-11 rounded-xl flex items-center justify-center"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(10,95,142,0.1), rgba(26,128,186,0.06))",
-                      color: "var(--color-accent)",
-                    }}
-                    aria-hidden="true"
-                  >
-                    <Icon size={22} />
-                  </div>
-                  <h3
-                    className="font-bold mb-2"
-                    style={{ color: "var(--color-text)", fontSize: "1.1rem" }}
-                  >
-                    {b.heading}
-                  </h3>
-                  {b.body ? (
-                    <p style={{ color: "var(--color-muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
-                      {b.body}
-                    </p>
-                  ) : (
-                    <p style={{ color: "var(--color-muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
-                      Move from data collection to manuscript-ready outputs without disconnected
-                      tools or delays. The{" "}
-                      <Link
-                        href="/workbench"
-                        className="underline hover:no-underline"
-                        style={{ color: "var(--color-accent)" }}
-                      >
-                        Workbench
-                      </Link>{" "}
-                      connects live study data directly to datasets, statistics, tables, and
-                      reports, so the path from collected data to submitted manuscript is shorter
-                      and repeatable.
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 4 — Questions worth asking ───────────────────── */}
-      <section className="pt-2 pb-12 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-3xl mx-auto">
-          <h2 className="text-center mb-6">Questions worth asking before you decide.</h2>
-          <ol className="space-y-5 list-none p-0">
-            {questions.map((q, i) => (
-              <li key={q} className="flex gap-4 items-start">
-                <span
-                  className="font-bold tabular-nums shrink-0"
-                  style={{
-                    color: "var(--color-accent)",
-                    fontSize: "2.25rem",
-                    lineHeight: 1,
-                    minWidth: "2.5rem",
+                    background: "rgba(200, 85, 44, 0.1)",
+                    color: "var(--color-accent-warm)",
                   }}
                   aria-hidden="true"
                 >
-                  {i + 1}
-                </span>
-                <p
-                  className="text-base sm:text-lg leading-relaxed pt-2"
-                  style={{ color: "var(--color-text)" }}
-                >
-                  {q}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                  </svg>
+                </div>
+                <h3 className="text-base font-bold mb-2" style={{ color: "var(--color-text)" }}>
+                  {p.title}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+                  {p.body}
                 </p>
-              </li>
+              </div>
             ))}
-          </ol>
           </div>
         </div>
       </section>
@@ -526,6 +430,28 @@ export default function CompareToREDCapPage() {
         </div>
       </section>
 
+      {/* ── Section 4c — But REDCap is "free" ────────────────────── */}
+      <section className="pt-2 pb-12 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="mb-5">But REDCap is &ldquo;free.&rdquo;</h2>
+            <p className="text-base sm:text-lg leading-relaxed mb-5" style={{ color: "var(--color-muted)" }}>
+              For 20+ years, Studytrax has supported academic and disease-focused research from
+              zero funding through major grants. If Studytrax fits your research, we&apos;ll find
+              a way to make licensing work, academic budgets are real, and we structure around
+              them. A 100% no-risk guarantee means you only stay if it&apos;s delivering.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 text-base sm:text-lg font-semibold underline hover:no-underline"
+              style={{ color: "var(--color-accent)" }}
+            >
+              See how pricing works <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── Section 5 — CTA ──────────────────────────────────────── */}
       <section
         className="pt-8 pb-16 sm:pt-10 sm:pb-20 px-4 sm:px-6"
@@ -539,14 +465,37 @@ export default function CompareToREDCapPage() {
             research and clinical workflows. If your current approach already meets your needs,
             we&apos;ll tell you.
           </p>
-          <Link
-            href="/contact"
-            className="btn-primary px-12 py-5 rounded text-base sm:text-lg font-semibold transition-colors whitespace-nowrap"
-            style={{ display: "inline-flex", alignItems: "center", gap: "0.625rem" }}
-          >
-            <Calendar size={20} aria-hidden="true" className="shrink-0" />
-            <span>Schedule a quick conversation</span>
-          </Link>
+          <div className="flex flex-col items-center gap-3">
+            <Link
+              href="/contact"
+              className="btn-primary px-12 py-5 rounded text-base sm:text-lg font-semibold transition-colors whitespace-nowrap"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.625rem" }}
+            >
+              <Calendar size={20} aria-hidden="true" className="shrink-0" />
+              <span>Book a 5-minute Fit Check Conversation</span>
+            </Link>
+            <p
+              className="text-sm font-semibold inline-flex items-center gap-2"
+              style={{ color: "var(--color-text)" }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                style={{ color: "var(--color-accent-warm)" }}
+              >
+                <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z" />
+                <polyline points="9 12 11 14 15 10" />
+              </svg>
+              100% No Risk Guarantee
+            </p>
+          </div>
           </div>
         </div>
       </section>

@@ -67,10 +67,34 @@ export default function ContactPage() {
                 realities of academic research and nonprofit organizations, where timelines, scope,
                 and funding can vary.
               </p>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--color-muted)" }}>
                 Every license includes full access to the platform. Pricing is not tied to
                 participant counts, number of sites, or feature usage, allowing your study to evolve
                 without constraint.
+              </p>
+              <p
+                className="text-sm font-semibold inline-flex items-center gap-2"
+                style={{ color: "var(--color-text)" }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  style={{ color: "var(--color-accent-warm)" }}
+                >
+                  <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z" />
+                  <polyline points="9 12 11 14 15 10" />
+                </svg>
+                100% No Risk Guarantee
+              </p>
+              <p className="text-sm leading-relaxed mt-1" style={{ color: "var(--color-muted)" }}>
+                Not the right fit? Get a full refund. No questions asked.
               </p>
             </div>
 

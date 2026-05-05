@@ -11,8 +11,6 @@ interface ContactPayload {
   name: string;
   email: string;
   phone?: string;
-  institution?: string;
-  role?: string;
   topic: string;
   message?: string;
 }
@@ -21,8 +19,6 @@ function validate(body: unknown): ContactPayload {
   const b = body as Record<string, unknown>;
   const name = String(b.name ?? "").trim();
   const email = String(b.email ?? "").trim();
-  const institution = String(b.institution ?? "").trim();
-  const role = String(b.role ?? "").trim();
   const topic = String(b.topic ?? "").trim();
 
   if (!name || !email || !topic) {
@@ -36,8 +32,6 @@ function validate(body: unknown): ContactPayload {
     name,
     email,
     phone: String(b.phone ?? "").trim() || undefined,
-    institution: institution || undefined,
-    role: role || undefined,
     topic,
     message: String(b.message ?? "").trim() || undefined,
   };
@@ -48,8 +42,6 @@ function buildHtml(data: ContactPayload): string {
     ["Name", data.name],
     ["Email", data.email],
     ["Phone", data.phone ?? "—"],
-    ["Institution", data.institution],
-    ["Role", data.role],
     ["Topic", data.topic],
     ["Message", data.message ?? "—"],
   ];
@@ -156,7 +148,7 @@ export async function POST(request: NextRequest) {
     const data = validate(body);
 
     await sendViaSesApi(
-      `[Studytrax Contact] ${data.topic} — ${data.name} (${data.institution})`,
+      `[Studytrax Contact] ${data.topic} — ${data.name}`,
       buildHtml(data),
       TO_ADDRESSES,
       `"Studytrax Website" <${FROM_ADDRESS}>`,
